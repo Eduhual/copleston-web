@@ -3,92 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Copleston Institute | Investigación & Gestión</title>
-    <style>
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: #050505; /* Negro casi absoluto */
-            color: #c0c0c0;
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 50px 20px;
-            line-height: 1.6;
-        }
-        h1 {
-            color: #d4af37; /* Dorado Copleston */
-            text-transform: uppercase;
-            border-bottom: 2px solid #333;
-            padding-bottom: 15px;
-            letter-spacing: 1px;
-        }
-        .subtitle {
-            font-style: italic;
-            color: #666;
-            margin-bottom: 40px;
-        }
-        h2 {
-            color: #fff;
-            margin-top: 40px;
-            font-size: 1.1rem;
-            border-left: 3px solid #d4af37;
-            padding-left: 12px;
-        }
-        a.btn {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 12px 24px;
-            border: 1px solid #d4af37;
-            color: #d4af37;
-            text-decoration: none;
-            transition: 0.3s;
-            font-weight: bold;
-        }
-        a.btn:hover {
-            background-color: #d4af37;
-            color: #000;
-        }
-        .footer {
-            margin-top: 60px;
-            padding-top: 20px;
-            border-top: 1px solid #222;
-            font-size: 0.8rem;
-            color: #444;
-            text-align: center;
-        }
-    </style>
+    <title>Instituto Copleston | Excelencia en Investigación</title>
+    <!-- SEO en página y Meta descriptions -->
+    <meta name="description" content="Instituto Copleston es una firma de alto nivel enfocada en investigación académica, análisis geopolítico e innovación filosófica.">
+    
+    <!-- CSS y Fuentes -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Cinzel aporta elegancia e historia (Serif); Inter aporta legibilidad y neutralidad (Sans-serif) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Navegación Superior -->
+    <header class="navbar" id="navbar">
+        <div class="logo">Instituto Copleston</div>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#pilares">Pilares Estratégicos</a></li>
+                <li><a href="#contacto" class="btn-gold-outline">Contacto</a></li>
+            </ul>
+        </nav>
+        <button class="mobile-menu-btn" aria-label="Menú">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
 
-    <h1>Copleston Institute</h1>
-    <p class="subtitle">"Veritas Norma Sui" — La verdad es su propia medida.</p>
+    <main>
+        <!-- 1) Sección Hero -->
+        <section id="inicio" class="hero">
+            <!-- Efecto de viñeta / oscurecido en los bordes para mayor misterio -->
+            <div class="hero-vignette"></div>
+            
+            <div class="hero-content">
+                <h1 class="hero-title">El poder del conocimiento en su forma más pura</h1>
+                <p class="hero-subtitle">Investigación estratégica y análisis de alto impacto para quienes definen el futuro. A la vanguardia de las ideas globales con máxima confidencialidad y rigor analítico.</p>
+                <a href="#pilares" class="btn-gold-solid">Descubrir Más</a>
+            </div>
+        </section>
 
-    <p>
-        Centro de investigación independiente. Convergencia entre 
-        <strong>Psicología Basada en Evidencia</strong>, 
-        <strong>Filosofía Analítica</strong> y 
-        <strong>Gestión Pública Técnica</strong>.
-    </p>
+        <!-- 2) Sección Pilares Estratégicos -->
+        <section id="pilares" class="pillars">
+            <h2 class="section-title">Pilares Estratégicos</h2>
+            <div class="pillars-grid">
+                
+                <div class="pillar-card">
+                    <div class="pillar-icon">I</div>
+                    <h3 class="pillar-title">Investigación Académica</h3>
+                    <div class="pillar-divider"></div>
+                    <p class="pillar-text">Profundidad histórica y metodológica para resolver los dilemas fundamentales de nuestro tiempo. Un enfoque multidisciplinario que trasciende lo convencional.</p>
+                </div>
 
-    <h2>01. Misión</h2>
-    <p>
-        Superar la gestión intuitiva mediante el rigor lógico y el análisis conductual.
-        Diseñamos estrategias para instituciones que buscan eficiencia real, no solo normativa.
-    </p>
+                <div class="pillar-card">
+                    <div class="pillar-icon">II</div>
+                    <h3 class="pillar-title">Análisis Geopolítico</h3>
+                    <div class="pillar-divider"></div>
+                    <p class="pillar-text">Inteligencia estratégica exhaustiva para navegar el complejo tablero internacional con claridad absoluta, anticipando movimientos sistémicos.</p>
+                </div>
 
-    <h2>02. Áreas de Enfoque</h2>
-    <ul>
-        <li>Políticas Públicas Conductuales (Nudge).</li>
-        <li>Ética Spinoziana y Toma de Decisiones.</li>
-        <li>Modernización del Estado & Ley SERVIR.</li>
-    </ul>
+                <div class="pillar-card">
+                    <div class="pillar-icon">III</div>
+                    <h3 class="pillar-title">Innovación Filosófica</h3>
+                    <div class="pillar-divider"></div>
+                    <p class="pillar-text">Cuestionando rigurosamente los paradigmas establecidos para forjar las estructuras de pensamiento y las perspectivas éticas del mañana.</p>
+                </div>
 
-    <a href="mailto:contacto@coplestoninstitute.com" class="btn">CONTACTAR DIRECCIÓN</a>
+            </div>
+        </section>
+    </main>
 
-    <div class="footer">
-        &copy; 2026 Frederick C. Copleston Institute.<br>
-        Cusco, Perú.<br>
-        [System: Online]
-    </div>
+    <!-- 3) Sección Footer -->
+    <footer id="contacto" class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h2 class="footer-logo">Instituto Copleston</h2>
+                <p class="footer-motto">Veritas et Sapientia</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacidad</a>
+                <a href="#">Términos del Servicio</a>
+                <a href="#">Directorio Restringido</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Instituto Copleston. Todos los derechos reservados. Confidencialidad bajo estatuto.
+        </div>
+    </footer>
 
+    <!-- Scripts de interactividad -->
+    <script src="script.js"></script>
 </body>
 </html>

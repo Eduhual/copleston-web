@@ -1,0 +1,439 @@
+/* --- Variables Globales y Paleta de Colores --- */
+:root {
+    /* Fondo principal en azul marino (casi negro) para misterio y seriedad */
+    --bg-main: #060913;
+    --bg-secondary: #0a0e1c;
+    
+    /* Textos y contrastes */
+    --text-pure: #ffffff;
+    --text-muted: #9ba1b5;
+    
+    /* Acentos dorados elegantes y sobrios */
+    --gold: #c5a059;
+    --gold-dark: #a38244;
+    --gold-light: #e0c283;
+    
+    /* Tipografías: Serif para títulos, Sans-serif para párrafos/textos */
+    --font-serif: 'Cinzel', serif;
+    --font-sans: 'Inter', sans-serif;
+    
+    /* Efectos de transición */
+    --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --- Reseteo de estilos base --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-pure);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Tipografía General --- */
+h1, h2, h3, h4, .logo, .footer-logo, .pillar-icon {
+    font-family: var(--font-serif);
+    font-weight: 400;
+}
+
+p, a, span, button {
+    font-family: var(--font-sans);
+}
+
+/* --- Navegación Superior --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 2rem 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    z-index: 1000;
+    transition: var(--transition);
+}
+
+.navbar.scrolled {
+    padding: 1.2rem 6%;
+    background: rgba(6, 9, 19, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+}
+
+.logo {
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    color: var(--text-pure);
+    text-transform: uppercase;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-pure);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: var(--transition);
+    opacity: 0.8;
+}
+
+nav a:not(.btn-gold-outline):hover {
+    color: var(--gold);
+    opacity: 1;
+}
+
+/* Menú Móvil (Oculto por defecto) */
+.mobile-menu-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.mobile-menu-btn span {
+    display: block;
+    width: 25px;
+    height: 2px;
+    background-color: var(--gold);
+    transition: var(--transition);
+}
+
+/* --- Botones --- */
+.btn-gold-outline {
+    border: 1px solid var(--gold);
+    padding: 0.6rem 1.8rem;
+    border-radius: 1px;
+    color: var(--gold) !important;
+    opacity: 1 !important;
+}
+
+.btn-gold-outline:hover {
+    background: var(--gold);
+    color: var(--bg-main) !important;
+}
+
+.btn-gold-solid {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--bg-main);
+    padding: 1.2rem 3.5rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 1px;
+    transition: var(--transition);
+    border: 1px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-gold-solid::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: 0.5s;
+}
+
+.btn-gold-solid:hover::before {
+    left: 100%;
+}
+
+.btn-gold-solid:hover {
+    background: transparent;
+    color: var(--gold);
+}
+
+/* --- Sección Hero --- */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 0 6%;
+    text-align: center;
+    background: radial-gradient(circle at center, var(--bg-secondary) 0%, var(--bg-main) 100%);
+}
+
+.hero-vignette {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.9);
+    pointer-events: none;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 950px;
+}
+
+.hero-title {
+    font-size: clamp(3rem, 6vw, 6rem);
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    color: var(--text-pure);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    /* Animación de fade y subida para el título */
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1.2s ease forwards 0.3s;
+}
+
+.hero-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    margin-bottom: 3.5rem;
+    font-weight: 300;
+    max-width: 650px;
+    margin-inline: auto;
+    letter-spacing: 0.5px;
+    /* Animación */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 1s ease forwards 0.6s;
+}
+
+.hero .btn-gold-solid {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 1s ease forwards 0.9s;
+}
+
+/* --- Sección Pilares Estratégicos --- */
+.pillars {
+    padding: 10rem 6%;
+    background-color: var(--bg-secondary);
+    position: relative;
+}
+
+/* Divisor sutil superior */
+.pillars::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 6rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+.pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 3.5rem;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.pillar-card {
+    background: rgba(255, 255, 255, 0.015);
+    border: 1px solid rgba(197, 160, 89, 0.08);
+    padding: 4rem 3rem;
+    text-align: center;
+    transition: var(--transition);
+    /* Para JavaScript Intersection Observer */
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.pillar-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.pillar-card:hover {
+    border-color: rgba(197, 160, 89, 0.4);
+    transform: translateY(-15px) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.pillar-icon {
+    font-size: 3.5rem;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+    letter-spacing: 2px;
+}
+
+.pillar-title {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.pillar-divider {
+    width: 40px;
+    height: 1px;
+    background-color: var(--gold);
+    margin: 0 auto 1.5rem auto;
+    transition: width 0.4s ease;
+}
+
+.pillar-card:hover .pillar-divider {
+    width: 80px;
+}
+
+.pillar-text {
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+}
+
+/* --- Footer --- */
+.footer {
+    padding: 6rem 6% 2rem;
+    background-color: var(--bg-main);
+    border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1300px;
+    margin: 0 auto 5rem;
+    flex-wrap: wrap;
+    gap: 3rem;
+}
+
+.footer-logo {
+    font-size: 2.2rem;
+    color: var(--text-pure);
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+}
+
+.footer-motto {
+    font-family: var(--font-serif);
+    color: var(--gold);
+    font-style: italic;
+    opacity: 0.8;
+    letter-spacing: 1px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: var(--gold);
+}
+
+.footer-bottom {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    opacity: 0.5;
+    letter-spacing: 1px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 2rem;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+/* --- Animaciones Clave --- */
+@keyframes fadeUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 900px) {
+    .navbar {
+        padding: 1.5rem 5%;
+    }
+    
+    .navbar.scrolled {
+        padding: 1rem 5%;
+    }
+
+    nav ul {
+        display: none; /* Opcional: Se puede añadir un modal de menú móvil */
+    }
+    
+    /* Mostrar botón de menú en móviles */
+    .mobile-menu-btn {
+        display: flex;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .pillars {
+        padding: 6rem 5%;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 4rem;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .footer-links {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}
