@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Manifiesto | Instituto Copleston</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="navbar" id="navbar">
+        <a href="index.html#vanguardia" class="logo-link">
+            <img src="IMG/logo/logo.png" alt="Instituto Copleston" class="logo-img">
+        </a>
+                <nav>
+            <ul>
+                <li><a href="index.html#vanguardia">Inicio</a></li>
+                <li><a href="manifiesto.html">El Manifiesto</a></li>
+                <li><a href="#" class="open-modal-link" data-target="article-modal">Artículos</a></li>
+                <li><a href="index.html#contacto" class="btn-gold-outline">Contacto</a></li>
+            </ul>
+        </nav>
+        <button class="mobile-menu-btn" aria-label="Menú">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <main>
+        <section class="page-header-spacing">
+            <div class="content-wrapper">
+                <span class="golden-label">Visión Institucional</span>
+                <h1 class="article-main-title">El Manifiesto</h1>
+                <div class="gold-divider-center" style="margin-top: 2rem;"></div>
+            </div>
+        </section>
+
+        <section class="manifiesto-standalone">
+            <div class="content-wrapper text-center">
+                <p class="elegant-text">
+                    En el Instituto Copleston no solo observamos los eventos; decodificamos su esencia. Nuestra misión es proporcionar perspectivas analíticas sin precedentes sobre la mente humana, las estructuras filosóficas y las corrientes socioculturales subyacentes que forjan la realidad del mañana. El rigor es nuestra moneda; la verdad, nuestra brújula.
+                </p>
+                <br>
+                <p class="elegant-text">
+                    La era contemporánea exige una introspección inquebrantable intelectualmente. Las narrativas imperantes han demostrado ser insuficientes para sostener el tejido del entendimiento a largo plazo. Es aquí donde la filosofía profunda, apartada de academicismos huecos y traída directamente al teatro de operaciones del estratega moderno, ejerce su poder rector absoluto. No concebimos el estudio de las ideas como un mero acto de contemplación, sino como la más alta forma de preparación de cara a los vientos inciertos.
+                </p>
+                <br>
+                <p class="elegant-text">
+                    Copleston se yergue como una fortaleza del pensamiento libre pero rigurosamente filtrado. Quienes acceden a nuestros espacios son partícipes de un conocimiento diseñado no solo para perdurar, sino para ser empuñado. El imperio intelectual demanda dueños que estén a su altura. 
+                </p>
+            </div>
+        </section>
+    </main>
+
+        <!-- Modales Flotantes -->
+    <div id="article-modal" class="modal-overlay">
+        <div class="modal-content dark-glass">
+            <button class="modal-close" aria-label="Cerrar">&times;</button>
+            <h2 class="section-title-small text-center" style="margin-bottom: 2.5rem;">Cámaras de Archivo</h2>
+            
+            <div class="modal-options">
+                <a href="filosofia.html" class="modal-option-card">
+                    <span class="modal-category">Investigación</span>
+                    <h3>Filosofía</h3>
+                    <p class="elegant-text">Exploración estructural del pensamiento humano, ontología corporativa y ética del futuro.</p>
+                </a>
+                
+                <a href="psicologia.html" class="modal-option-card">
+                    <span class="modal-category">Investigación</span>
+                    <h3>Psicología</h3>
+                    <p class="elegant-text">Análisis de la arquitectura de la mente, decisiones heurísticas y sesgos de comportamiento.</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="latest-modal" class="modal-overlay">
+        <div class="modal-content dark-glass">
+            <button class="modal-close" aria-label="Cerrar">&times;</button>
+            <h2 class="section-title-small text-center" style="margin-bottom: 2.5rem;">Últimos Artículos</h2>
+            
+            <div class="modal-options">
+                <a href="art_filosofia_1.html" class="modal-option-card">
+                    <span class="modal-category">Filosofía</span>
+                    <h3>El Estoicismo en la Sala de Juntas</h3>
+                    <p class="elegant-text">Cómo los principios de Marco Aurelio redefinen el liderazgo moderno (Oct. 12).</p>
+                </a>
+                
+                <a href="art_psicologia_1.html" class="modal-option-card">
+                    <span class="modal-category">Psicología</span>
+                    <h3>Mapeo Cognitivo Avanzado</h3>
+                    <p class="elegant-text">Técnicas empíricas de desestructuración mental para resolución de conflictos (Oct. 05).</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contacto" class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="IMG/logo/logo.png" alt="Instituto Copleston Logo" class="footer-logo-img">
+                <p class="footer-motto">Veritas et Sapientia</p>
+            </div>
+            <div class="footer-links">
+                <a href="mailto:contacto@coplestoninstitute.com" class="footer-email">contacto@coplestoninstitute.com</a>
+                <a href="#">Privacidad</a>
+                <a href="#">Términos del Servicio</a>
+                <a href="#">Directorio Restringido</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Instituto Copleston. Todos los derechos reservados. Confidencialidad bajo estatuto.
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

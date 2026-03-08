@@ -3,21 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instituto Copleston | Excelencia en Investigación</title>
-    <!-- SEO en página y Meta descriptions -->
-    <meta name="description" content="Instituto Copleston es una firma de alto nivel enfocada en investigación académica, análisis geopolítico e innovación filosófica.">
-    
-    <!-- CSS y Fuentes -->
+    <title>Cámara de Filosofía | Instituto Copleston</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Cinzel aporta elegancia e historia (Serif); Inter aporta legibilidad y neutralidad (Sans-serif) -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Navegación Superior -->
     <header class="navbar" id="navbar">
-        <a href="#inicio" class="logo-link">
+        <a href="index.html#vanguardia" class="logo-link">
             <img src="IMG/logo/logo.png" alt="Instituto Copleston" class="logo-img">
         </a>
                 <nav>
@@ -34,74 +28,37 @@
     </header>
 
     <main>
-        <!-- 1) La Vanguardia (Hero) -->
-        <section id="vanguardia" class="hero-vanguardia">
-            <div class="hero-vignette"></div>
-            <div class="content-wrapper text-center">
-                <h1 class="hero-title">El poder del conocimiento en su forma más pura</h1>
-                <p class="hero-subtitle">Mapeo estratégico, prospectiva de élite e investigación en las fronteras de la comprensión humana. Nos dedicamos a desentrañar lo complejo para forjar estructuras resilientes en el tiempo.</p>
-                <a href="#" id="btn-open-modal" class="btn-gold-solid" data-target="latest-modal">Leer el Último Artículo</a>
-            </div>
-        </section>
-
-        <!-- 3) Los Pilares (Psicología y Filosofía) -->
-        <section id="pilares" class="pilares-premium">
+        <section class="page-header-spacing">
             <div class="content-wrapper">
-                <h2 class="section-title">Los Pilares Fundamentales</h2>
-                <div class="pilares-grid-2">
-                    <div class="premium-card">
-                        <span class="card-number">01</span>
-                        <h3 class="card-title">Psicología Profunda</h3>
-                        <div class="gold-line"></div>
-                        <p class="card-text">Exploramos los abismos del comportamiento humano y los sesgos cognitivos que determinan la toma de decisiones en entornos de alta presión.</p>
-                    </div>
-                    <div class="premium-card">
-                        <span class="card-number">02</span>
-                        <h3 class="card-title">Filosofía Estratégica</h3>
-                        <div class="gold-line"></div>
-                        <p class="card-text">La aplicación de sistemas éticos y paradigmas ontológicos históricos para resolver los dilemas corporativos y geopolíticos más intrincados.</p>
-                    </div>
-                </div>
+                <span class="golden-label">Investigación</span>
+                <h1 class="article-main-title">Estructura del Pensamiento</h1>
+                <p class="hero-subtitle">Archivo central de artículos filosóficos, ética futura y ontología corporativa.</p>
+                <div class="gold-divider-center" style="margin-top: 2rem;"></div>
             </div>
         </section>
 
-        <!-- 5) Zona de Expansión -->
-        <section id="expansion" class="zona-expansion">
+        <section class="articulos-semanales" style="padding-top: 4rem;">
             <div class="content-wrapper">
-                <h2 class="section-title">Expansión Restringida</h2>
-                <div class="expansion-grid">
-                    <!-- Tarjeta Curso -->
-                    <div class="expansion-card dark-glass">
-                        <div class="status-badge">Próximamente</div>
-                        <h3 class="expansion-title">La Academia</h3>
-                        <p class="expansion-desc">Seminarios privados de alto rigor intelectual para mentes seleccionadas. Currículo en fase de estructuración.</p>
-                    </div>
-                    <!-- Banner Revista -->
-                    <div class="expansion-banner dark-glass">
-                        <div class="banner-content">
-                            <h3 class="expansion-title">Revista Copleston</h3>
-                            <p class="expansion-desc">Publicación trimestral impresa de colección. Ensayos magnos encuadernados en edición limitada.</p>
-                        </div>
-                        <a href="#" class="btn-gold-outline disabled-btn">Acceso Restringido</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <div class="articulos-grid">
+                    <!-- Articulo Filosofía 1 (El Último) -->
+                    <article class="articulo-card">
+                        <span class="articulo-date">Octubre 12, 2026</span>
+                        <h4 class="articulo-title">El Estoicismo en la Sala de Juntas</h4>
+                        <p class="articulo-excerpt">Cómo los principios de Marco Aurelio están redefiniendo el liderazgo ejecutivo moderno ante la volatilidad del mercado.</p>
+                        <a href="art_filosofia_1.html" class="btn-link-gold">Leer Artículo <span>&#8594;</span></a>
+                    </article>
 
-        <!-- 6) La Red Confidencial (Suscripción) -->
-        <section id="suscripcion" class="red-confidencial">
-            <div class="content-wrapper text-center narrow-content">
-                <h2 class="section-title-small">Invitación al Círculo Interno</h2>
-                <p class="elegant-text">Suscríbase para recibir, de manera completamente confidencial, nuestros memorandos analíticos mensuales. Una sola pieza de conocimiento capaz de alterar perspectivas.</p>
-                <form class="minimal-form" onsubmit="event.preventDefault();">
-                    <input type="email" placeholder="Correo Electrónico Privado" class="luxury-input" required>
-                    <button type="submit" class="btn-gold-solid">Solicitar Acceso</button>
-                </form>
+                    <!-- Articulo Filosofía 2 -->
+                    <article class="articulo-card">
+                        <span class="articulo-date">Septiembre 28, 2026</span>
+                        <h4 class="articulo-title">La Ética de la Inteligencia Autónoma</h4>
+                        <p class="articulo-excerpt">Un marco bioético normativo para la implementación sistemas algorítmicos que reemplazarán decisiones de vida o muerte.</p>
+                        <a href="art_filosofia_2.html" class="btn-link-gold">Leer Artículo <span>&#8594;</span></a>
+                    </article>
+                </div>
             </div>
         </section>
     </main>
-
-    
 
         <!-- Modales Flotantes -->
     <div id="article-modal" class="modal-overlay">
@@ -146,7 +103,6 @@
         </div>
     </div>
 
-    <!-- 3) Sección Footer -->
     <footer id="contacto" class="footer">
         <div class="footer-content">
             <div class="footer-brand">
@@ -164,8 +120,6 @@
             &copy; 2026 Instituto Copleston. Todos los derechos reservados. Confidencialidad bajo estatuto.
         </div>
     </footer>
-
-    <!-- Scripts de interactividad -->
     <script src="script.js"></script>
 </body>
 </html>

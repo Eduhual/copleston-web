@@ -22,29 +22,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const observerOptions = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.15 // Se activa cuando el 15% del elemento es visible
+        threshold: 0.15
     };
 
     const scrollObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                // Al añadir la clase, dejamos de observar para mejorar rendimiento
                 observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    // Seleccionamos las tarjetas de pilares para la animación en cascada
-    const pillarCards = document.querySelectorAll('.pillar-card');
+    // Seleccionamos las nuevas tarjetas y elementos para animarlos (opcional para el futuro)
+    const animatableElements = document.querySelectorAll('.premium-card, .articulo-card, .expansion-card, .expansion-banner');
     
-    pillarCards.forEach((card, index) => {
-        // En lugar de añadir la clase inmediatamente cuando es visible,
-        // interceptamos con observer y el CSS se encarga del retraso sutil
-        // aplicando un pequeño delay inline según su índice.
-        card.style.transitionDelay = `${index * 0.15}s`;
-        scrollObserver.observe(card);
+    animatableElements.forEach((el, index) => {
+        // Inicializamos estilos para la animación css (opcional)
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        
+        scrollObserver.observe(el);
     });
+
+    // Pequeño hack para manejar la clase 'visible' añadida por el JS
+    // Debemos agregar una regla CSS general rápido u observar el evento
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .visible {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+    `;
+    document.head.appendChild(style);
 
     /* =========================================
        3. Navegación Suave (Smooth Scrolling)
@@ -82,4 +93,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /* =========================================
+       5. Lógica de Modales (Múltiples)
+    ========================================= */
+    const openModalBtns = document.querySelectorAll('.open-modal-link, #btn-open-modal');
+    const closeBtns = document.querySelectorAll('.modal-close');
+    const overlays = document.querySelectorAll('.modal-overlay');
+
+    if (openModalBtns.length > 0) {
+        openModalBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = btn.getAttribute('data-target') || 'article-modal';
+                const targetModal = document.getElementById(targetId);
+                
+                if (targetModal) {
+                    targetModal.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Evita scroll de fondo
+                }
+            });
+        });
+
+        // Cerrar con la X
+        closeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                overlays.forEach(m => m.classList.remove('active'));
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Cerrar al hacer click fuera del contenido
+        overlays.forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+    }
 });
