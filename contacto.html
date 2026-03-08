@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto | Instituto Copleston</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="navbar" id="navbar">
+        <a href="./index.html#vanguardia" class="logo-link">
+            <img src="./IMG/logo/logo.png" alt="Escudo Copleston" class="logo-img">
+            <span class="logo-text">Instituto Copleston</span>
+        </a>
+        <nav>
+            <ul>
+                <li><a href="./index.html#vanguardia">Inicio</a></li>
+                <li><a href="./manifiesto.html">El Manifiesto</a></li>
+                <li><a href="#" class="open-modal-link" data-target="article-modal">Artículos</a></li>
+                <li><a href="./contacto.html" class="btn-gold-outline btn-gold-active">Contacto</a></li>
+            </ul>
+        </nav>
+        <button class="mobile-menu-btn" aria-label="Menú">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <main>
+        <section class="page-header-spacing">
+            <div class="content-wrapper text-center">
+                <span class="golden-label">Colaboración Estratégica</span>
+                <h1 class="article-main-title">Canal Abierto</h1>
+                <p class="hero-subtitle" style="margin-top:1rem;">Nuestras líneas de comunicación se encuentran abiertas para propuestas, colaboraciones académicas, entre otros.</p>
+                <div class="gold-divider-center" style="margin-top: 2rem;"></div>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <div class="content-wrapper contact-grid">
+                <!-- Información de Contacto -->
+                <div class="contact-info dark-glass">
+                    <h2 class="section-title-small">Información de Contacto</h2>
+                    <p class="elegant-text">Nuestro tiempo de respuesta habitual para consultas es de 48 horas.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span class="golden-label">Correo Principal</span>
+                            <a href="mailto:contacto@coplestoninstitute.com" class="contact-link">contacto@coplestoninstitute.com</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulario Funcional Formsubmit -->
+                <div class="contact-form-container">
+                    <!-- Configuración Formsubmit -->
+                    <form action="https://formsubmit.co/contacto@coplestoninstitute.com" method="POST" class="contact-form">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_subject" value="Nueva Transmisión: Formulario Copleston">
+
+                        <div class="form-group">
+                            <label for="name" class="golden-label">Nombre o Pseudónimo</label>
+                            <input type="text" id="name" name="name" class="luxury-input" placeholder="Su identificador" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="golden-label">Canal de Retorno (Email)</label>
+                            <input type="email" id="email" name="email" class="luxury-input" placeholder="Correo corporativo o seguro" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="asunto" class="golden-label">Naturaleza de la Consulta</label>
+                            <select id="asunto" name="asunto" class="luxury-input select-dark" required>
+                                <option value="" disabled selected>Seleccione el asunto...</option>
+                                <option value="Colaboración Académica">Colaboración Académica</option>
+                                <option value="Propuestas">Propuestas</option>
+                                <option value="Otros">Otros</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mensaje" class="golden-label">Asunto Textual</label>
+                            <textarea id="mensaje" name="mensaje" rows="6" class="luxury-input textarea-dark" placeholder="Detalle su solicitud aquí..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-gold-solid btn-full">Enviar</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modales Flotantes -->
+    <div id="article-modal" class="modal-overlay">
+        <div class="modal-content dark-glass">
+            <button class="modal-close" aria-label="Cerrar">&times;</button>
+            <h2 class="section-title-small text-center" style="margin-bottom: 2.5rem;">Cámaras de Archivo</h2>
+            
+            <div class="modal-options">
+                <a href="filosofia.html" class="modal-option-card">
+                    <span class="modal-category">Investigación</span>
+                    <h3>Filosofía</h3>
+                    <p class="elegant-text">Exploración estructural del pensamiento humano, ontología corporativa y ética del futuro.</p>
+                </a>
+                
+                <a href="psicologia.html" class="modal-option-card">
+                    <span class="modal-category">Investigación</span>
+                    <h3>Psicología</h3>
+                    <p class="elegant-text">Análisis de la arquitectura de la mente, decisiones heurísticas y sesgos de comportamiento.</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="latest-modal" class="modal-overlay">
+        <div class="modal-content dark-glass">
+            <button class="modal-close" aria-label="Cerrar">&times;</button>
+            <h2 class="section-title-small text-center" style="margin-bottom: 2.5rem;">Últimos Artículos</h2>
+            
+            <div class="modal-options">
+                <a href="art_filosofia_1.html" class="modal-option-card">
+                    <span class="modal-category">Filosofía</span>
+                    <h3>El Estoicismo en la Sala de Juntas</h3>
+                    <p class="elegant-text">Cómo los principios de Marco Aurelio redefinen el liderazgo moderno (Oct. 12).</p>
+                </a>
+                
+                <a href="art_psicologia_1.html" class="modal-option-card">
+                    <span class="modal-category">Psicología</span>
+                    <h3>Mapeo Cognitivo Avanzado</h3>
+                    <p class="elegant-text">Técnicas empíricas de desestructuración mental para resolución de conflictos (Oct. 05).</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contacto" class="footer">
+            <div class="footer-brand">
+                <h2 class="footer-logo">Instituto Copleston</h2>
+                <p class="footer-motto">Veritas et Sapientia</p>
+            </div>
+            <div class="footer-links">
+                <a href="mailto:contacto@coplestoninstitute.com" class="footer-email">contacto@coplestoninstitute.com</a>
+                <a href="#">Privacidad</a>
+                <a href="#">Términos del Servicio</a>
+                <a href="#">Directorio Restringido</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Instituto Copleston. Todos los derechos reservados. Confidencialidad bajo estatuto.
+        </div>
+    </footer>
+    <script src="./script.js"></script>
+</body>
+</html>
