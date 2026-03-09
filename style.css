@@ -138,7 +138,20 @@ nav a:not(.btn-gold-outline):hover {
     width: 25px;
     height: 2px;
     background-color: var(--gold);
-    transition: var(--transition);
+    transition: transform 0.4s cubic-bezier(0.77,0.2,0.05,1), opacity 0.4s ease;
+}
+
+.mobile-menu-btn.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(20px);
+}
+
+.mobile-menu-btn.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
 }
 
 /* --- Botones --- */
@@ -812,11 +825,43 @@ nav a:not(.btn-gold-outline):hover {
     }
 
     nav ul {
-        display: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(4, 15, 22, 0.95);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        gap: 3rem;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: transform 0.6s cubic-bezier(0.77,0.2,0.05,1), opacity 0.6s ease, visibility 0.6s;
+        z-index: 999;
+        margin: 0;
+        padding: 0;
+    }
+    
+    nav ul.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    nav ul li a {
+        font-size: 1.5rem;
+        letter-spacing: 3px;
     }
     
     .mobile-menu-btn {
         display: flex;
+        z-index: 1000;
+        position: relative;
     }
     
     .hero-vanguardia .hero-title {

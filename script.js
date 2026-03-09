@@ -80,16 +80,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* =========================================
-       4. Menú de Móvil Básico (Placeholder)
+       4. Menú de Móvil Interactivo
     ========================================= */
-    // Para futura extensibilidad si deciden habilitar menú lateral en móviles
     const mobileBtn = document.querySelector('.mobile-menu-btn');
-    if (mobileBtn) {
+    const navMenu = document.querySelector('nav ul');
+    
+    if (mobileBtn && navMenu) {
         mobileBtn.addEventListener('click', () => {
-            // Lógica para toggle class 'active' a la botonera y menú
             mobileBtn.classList.toggle('active');
-            // document.querySelector('nav ul').classList.toggle('show');
-            // Aquí puedes añadir más si es necesario.
+            navMenu.classList.toggle('active');
+            
+            // Bloquear scroll de fondo cuando menú abierto
+            if (navMenu.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Cerrar menú al presionar un link interno
+        const navLinks = navMenu.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileBtn.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
         });
     }
 
