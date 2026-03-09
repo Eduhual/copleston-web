@@ -94,9 +94,22 @@
             <div class="content-wrapper text-center narrow-content">
                 <h2 class="section-title-small">Invitación al Círculo Interno</h2>
                 <p class="elegant-text">Suscríbase para recibir, de manera completamente confidencial, nuestros memorandos analíticos mensuales. Una sola pieza de conocimiento capaz de alterar perspectivas.</p>
-                <form class="minimal-form" onsubmit="event.preventDefault();">
-                    <input type="email" placeholder="Correo Electrónico Privado" class="luxury-input" required>
-                    <button type="submit" class="btn-gold-solid">Solicitar Acceso</button>
+                <form action="https://formsubmit.co/contacto@coplestoninstitute.com" method="POST" class="minimal-form" style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_subject" value="Nueva Suscripción al Círculo Interno">
+                    <input type="hidden" name="_next" value="https://coplestoninstitute.com/index.html">
+                    
+                    <div style="display: flex; width: 100%; max-width: 500px; gap: 0;">
+                        <input type="email" name="email" placeholder="Correo Electrónico Privado" class="luxury-input" style="flex: 1; border-top-right-radius: 0; border-bottom-right-radius: 0; margin-bottom: 0;" required>
+                        <button type="submit" class="btn-gold-solid" style="border-top-left-radius: 0; border-bottom-left-radius: 0;">Solicitar Acceso</button>
+                    </div>
+
+                    <div style="display: flex; align-items: flex-start; gap: 0.8rem; text-align: left; max-width: 500px; margin-top: 1rem;">
+                        <input type="checkbox" id="consentimiento" name="consentimiento" value="Aceptado" required style="margin-top: 0.3rem; accent-color: var(--gold);">
+                        <label for="consentimiento" class="elegant-text" style="font-size: 0.85rem; line-height: 1.4;">
+                            Doy mi consentimiento expreso para que el Instituto Copleston almacene mi correo y me envíe comunicaciones confidenciales, material analítico, invitaciones a cursos y promociones académicas exclusivas.
+                        </label>
+                    </div>
                 </form>
             </div>
         </section>
