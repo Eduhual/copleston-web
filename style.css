@@ -176,9 +176,10 @@ p, a, span, button {
 
 .navbar.scrolled {
     padding: 1.2rem 6%;
-    background: rgba(6, 9, 19, 0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+    background: rgba(6, 9, 19, 0.98); /* Prácticamente sólido */
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(197, 160, 89, 0.2); /* Borde dorado un poco más visible */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8); /* Sombra oscura para separar del contenido */
 }
 
 .logo-link {
@@ -916,6 +917,17 @@ nav a:not(.btn-gold-outline):hover {
     margin-bottom: 2rem;
 }
 
+/* Modo Zen: Drop Caps (Letra Capitular) para el primer párrafo del artículo */
+.article-body p:first-of-type::first-letter {
+    font-family: var(--font-serif);
+    font-size: 4rem;
+    color: var(--gold);
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.6rem;
+    margin-top: 0.2rem;
+}
+
 .article-body h2 {
     font-size: 2rem;
     color: var(--text-pure);
@@ -962,11 +974,22 @@ nav a:not(.btn-gold-outline):hover {
     }
 
     .logo-img {
-        height: 38px; /* Más pequeño para evitar que choque con el menú */
+        height: 50px; /* Grande e imponente cuando estás arriba */
+        transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .logo-text {
-        font-size: 1.1rem; /* Reducido para celular */
+        font-size: 1.4rem; /* Grande cuando estás arriba */
+        letter-spacing: 2px;
+        transition: font-size 0.4s cubic-bezier(0.16, 1, 0.3, 1), letter-spacing 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .navbar.scrolled .logo-img {
+        height: 35px; /* Se encoge elegantemente al bajar para ahorrar espacio */
+    }
+
+    .navbar.scrolled .logo-text {
+        font-size: 1rem; /* Reducido para celular al hacer scroll */
         letter-spacing: 1px;
     }
 
@@ -1014,6 +1037,12 @@ nav a:not(.btn-gold-outline):hover {
         font-size: 2.5rem;
     }
 
+    /* Modal Zen Readings para artículos en móvil - Texto más grande */
+    .article-body p {
+        font-size: 1.25rem; /* Más grande en celular para lectura inmersiva */
+        line-height: 1.95;
+    }
+
     .pilares-premium, .articulos-semanales, .zona-expansion, .red-confidencial, .manifiesto {
         padding: 6rem 0;
     }
@@ -1042,6 +1071,44 @@ nav a:not(.btn-gold-outline):hover {
         flex-direction: column;
         gap: 1.5rem;
     }
+}
+
+/* --- Botón Flotante Volver Arriba Global --- */
+#back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(197, 160, 89, 0.15); /* Fondo dorado elegante y translúcido */
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    color: var(--gold); /* Flecha dorada */
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+#back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+#back-to-top:hover {
+    background: var(--gold);
+    color: var(--bg-main);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(197, 160, 89, 0.4);
 }
 
 /* =========================================

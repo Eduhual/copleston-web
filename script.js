@@ -64,6 +64,35 @@ document.addEventListener('DOMContentLoaded', () => {
     /* =========================================
        1. Efecto Scroll en la Barra de Navegación 
     ========================================= */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 80) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+
+        // Lógica para Botón Volver Arriba
+        const backToTopBtn = document.getElementById('back-to-top');
+        if (backToTopBtn) {
+            if (window.scrollY > 500) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        }
+    });
+
+    // Acción de Clic para Volver Arriba
+    const backToTopBtn = document.getElementById('back-to-top');
+    if(backToTopBtn) {
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
 
     /* =========================================
        2. Revelación Dinámica (Fade-Up / Reveal)
