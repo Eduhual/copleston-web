@@ -952,11 +952,22 @@ nav a:not(.btn-gold-outline):hover {
     }
     
     .navbar {
-        padding: 1.5rem 5%;
+        padding: 1rem 5%;
     }
     
     .navbar.scrolled {
-        padding: 1rem 5%;
+        padding: 0.8rem 5%;
+        background: rgba(6, 9, 19, 1); /* Fondo 100% sólido para que no se mezcle el texto al bajar */
+        box-shadow: 0 4px 30px rgba(0,0,0,0.8);
+    }
+
+    .logo-img {
+        height: 38px; /* Más pequeño para evitar que choque con el menú */
+    }
+
+    .logo-text {
+        font-size: 1.1rem; /* Reducido para celular */
+        letter-spacing: 1px;
     }
 
     nav ul {
