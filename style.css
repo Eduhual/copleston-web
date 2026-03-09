@@ -915,6 +915,7 @@ nav a:not(.btn-gold-outline):hover {
     color: var(--text-muted);
     font-weight: 300;
     margin-bottom: 2rem;
+    text-align: justify;
 }
 
 /* Modo Zen: Drop Caps (Letra Capitular) para el primer párrafo del artículo */
