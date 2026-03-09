@@ -32,6 +32,28 @@ html {
     scroll-behavior: smooth;
 }
 
+/* --- Scrollbar Custom de Alta Gama (Webkit) --- */
+::-webkit-scrollbar {
+    width: 8px; /* Fina y elegante */
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-main); 
+    border-left: 1px solid rgba(197, 160, 89, 0.05); /* Delicada línea separadora */
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(197, 160, 89, 0.3); /* Dorado translúcido y sobrio */
+    border-radius: 10px;
+    border: 2px solid var(--bg-main); /* Crea un "padding" interno ilusorio */
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(197, 160, 89, 0.8); /* Brilla al pasar el cursor (PC) */
+}
+
 body {
     background-color: var(--bg-main);
     color: var(--text-pure);
@@ -40,6 +62,92 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ocultar el cursor genérico en Desktop para dar paso al Custom Cursor */
+@media (pointer: fine) {
+    body, a, button, input, textarea, select {
+        cursor: none !important;
+    }
+}
+
+/* --- Preloader Institucional --- */
+#copleston-preloader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background-color: #020308; /* Negro super profundo */
+    z-index: 999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#copleston-preloader img {
+    width: 100px;
+    opacity: 0;
+    filter: drop-shadow(0 0 20px rgba(197,160,89,0.3));
+    animation: preloaderPulse 2.5s infinite ease-in-out;
+}
+
+@keyframes preloaderPulse {
+    0% { transform: scale(0.95); opacity: 0.3; }
+    50% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 35px rgba(197,160,89,0.7)); }
+    100% { transform: scale(0.95); opacity: 0.3; }
+}
+
+/* --- Custom Cursor --- */
+.custom-cursor {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999999;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px var(--gold);
+    transition: width 0.3s, height 0.3s, background 0.3s;
+    mix-blend-mode: difference; /* Para que resalte siempre */
+}
+
+.custom-cursor-follower {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999998;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, border-color 0.3s, transform 0.15s ease-out;
+}
+
+/* Activo/Hover State */
+.custom-cursor.active {
+    width: 0;
+    height: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.custom-cursor-follower.active {
+    width: 60px;
+    height: 60px;
+    border-color: var(--gold);
+    background: rgba(197, 160, 89, 0.1);
+    backdrop-filter: blur(2px);
+}
+
+/* --- Ocultar cursor custom en móviles / tablets --- */
+@media (max-width: 900px), (pointer: coarse) {
+    .custom-cursor, .custom-cursor-follower {
+        display: none !important;
+    }
+    body, a, button, input, textarea, select {
+        cursor: auto !important;
+    }
 }
 
 /* --- Tipografía General --- */
