@@ -8,59 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
     ========================================= */
     const preloader = document.getElementById('copleston-preloader');
     if (preloader) {
-        // Asegurarnos de que la página se vea después de 1.8 segundos o cuando cargue por completo
+        // Reducir a 0ms para carga instantánea
         setTimeout(() => {
             preloader.style.opacity = '0';
             preloader.style.visibility = 'hidden';
-            
-            // Iniciar animaciones de reveal un poco después de que se quite el preloader
-            setTimeout(() => document.body.classList.add('loaded'), 500);
-        }, 1800);
+            setTimeout(() => document.body.classList.add('loaded'), 50);
+        }, 50);
     }
 
-    /* =========================================
-       0.5. Custom Cursor (Elite PC UX)
-    ========================================= */
-    const cursor = document.querySelector('.custom-cursor');
-    const follower = document.querySelector('.custom-cursor-follower');
-    
-    // Solo activamos cursor custom si no estamos en dispositivo táctil (basado en hover)
-    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
-    
-    if (cursor && follower && !isTouchDevice) {
-        let posX = 0, posY = 0;
-        let mouseX = 0, mouseY = 0;
 
-        // Animar el follower con un ligero retraso (easing)
-        setInterval(function() {
-            posX += (mouseX - posX) / 6;
-            posY += (mouseY - posY) / 6;
-            follower.style.left = posX + 'px';
-            follower.style.top = posY + 'px';
-        }, 16);
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            // El punto central se mueve instantáneamente
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        // Efecto Hover en elementos interactivos
-        const interactives = document.querySelectorAll('a, button, input, textarea, select, .premium-card, .articulo-card');
-        interactives.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.classList.add('active');
-                follower.classList.add('active');
-            });
-            el.addEventListener('mouseleave', () => {
-                cursor.classList.remove('active');
-                follower.classList.remove('active');
-            });
-        });
-    }
-    
     /* =========================================
        1. Efecto Scroll en la Barra de Navegación 
     ========================================= */
@@ -130,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
              delay = siblingIndex * 0.15;
         }
         
-        el.style.transition = `opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`;
+        el.style.transition = `opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`;
         
         scrollObserver.observe(el);
     });
@@ -148,6 +104,9 @@ document.addEventListener('DOMContentLoaded', () => {
        2.5. Tilt 3D Magnético (Interacción Elite)
     ========================================= */
     const tiltCards = document.querySelectorAll('.premium-card, .articulo-card');
+    
+    // Validar dispositivo tactil para deshabilitar animaciones pesadas en movil
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
     
     if(!isTouchDevice) {
         tiltCards.forEach(card => {
