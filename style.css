@@ -69,18 +69,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Ocultar el cursor genérico en Desktop para dar paso al Custom Cursor */
-@media (pointer: fine) {
 
-    body,
-    a,
-    button,
-    input,
-    textarea,
-    select {
-        cursor: none !important;
-    }
-}
 
 /* --- Preloader Institucional --- */
 #copleston-preloader {
@@ -123,68 +112,7 @@ body {
     }
 }
 
-/* --- Custom Cursor --- */
-.custom-cursor {
-    position: fixed;
-    width: 8px;
-    height: 8px;
-    background: var(--gold);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999999;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 0 10px var(--gold);
-    transition: width 0.3s, height 0.3s, background 0.3s;
-    mix-blend-mode: difference;
-    /* Para que resalte siempre */
-}
 
-.custom-cursor-follower {
-    position: fixed;
-    width: 40px;
-    height: 40px;
-    border: 1px solid rgba(197, 160, 89, 0.4);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999998;
-    transform: translate(-50%, -50%);
-    transition: width 0.3s, height 0.3s, border-color 0.3s, transform 0.15s ease-out;
-}
-
-/* Activo/Hover State */
-.custom-cursor.active {
-    width: 0;
-    height: 0;
-    background: transparent;
-    box-shadow: none;
-}
-
-.custom-cursor-follower.active {
-    width: 60px;
-    height: 60px;
-    border-color: var(--gold);
-    background: rgba(197, 160, 89, 0.1);
-    backdrop-filter: blur(2px);
-}
-
-/* --- Ocultar cursor custom en móviles / tablets --- */
-@media (max-width: 900px),
-(pointer: coarse) {
-
-    .custom-cursor,
-    .custom-cursor-follower {
-        display: none !important;
-    }
-
-    body,
-    a,
-    button,
-    input,
-    textarea,
-    select {
-        cursor: auto !important;
-    }
-}
 
 /* --- Tipografía General --- */
 h1,
@@ -971,13 +899,17 @@ nav a:not(.btn-gold-outline):hover {
 }
 
 .modal-option-card {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-decoration: none;
-    padding: 3rem 2rem;
+    padding: 4rem 2rem;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(197, 160, 89, 0.1);
     transition: var(--transition);
     text-align: center;
+    min-height: 200px;
 }
 
 .modal-option-card:hover {
@@ -989,20 +921,16 @@ nav a:not(.btn-gold-outline):hover {
 .modal-category {
     display: block;
     color: var(--gold);
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 1rem;
+    letter-spacing: 3px;
+    margin-bottom: 1.5rem;
 }
 
 .modal-option-card h3 {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     color: var(--text-pure);
-    margin-bottom: 1rem;
-}
-
-.modal-option-card .elegant-text {
-    font-size: 0.95rem;
+    margin-bottom: 0;
 }
 
 /* --- Layout Página de Artículo y Manifiesto Independiente --- */
