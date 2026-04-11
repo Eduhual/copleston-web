@@ -260,4 +260,133 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    /* =========================================
+       8. Firebase Authentication Integración
+    ========================================= */
+    const firebaseConfig = {
+        apiKey: "TU_API_KEY",
+        authDomain: "TU_AUTH_DOMAIN",
+        projectId: "TU_PROJECT_ID",
+        storageBucket: "TU_STORAGE_BUCKET",
+        messagingSenderId: "TU_MESSAGING_SENDER_ID",
+        appId: "TU_APP_ID"
+    };
+
+    if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    
+    // Solo continuar si Firebase cargó correctamente
+    if (typeof firebase !== 'undefined') {
+        const auth = firebase.auth();
+
+        const authForm = document.getElementById('auth-form');
+        const authEmail = document.getElementById('auth-email');
+        const authPassword = document.getElementById('auth-password');
+        const authGoogleBtn = document.getElementById('auth-google-btn');
+        const authToggleMode = document.getElementById('auth-toggle-mode');
+        const authSubmitBtn = document.getElementById('auth-submit-btn');
+        const authNavBtn = document.getElementById('auth-btn');
+        const authModal = document.getElementById('auth-modal');
+
+        let isLoginMode = true;
+
+        if (authToggleMode) {
+            authToggleMode.addEventListener('click', (e) => {
+                e.preventDefault();
+                isLoginMode = !isLoginMode;
+                authSubmitBtn.textContent = isLoginMode ? 'Iniciar Sesión' : 'Crear Acceso';
+                authToggleMode.textContent = isLoginMode ? 'Solicitar Ingreso' : 'Ya tengo acceso';
+                authToggleMode.previousSibling.textContent = isLoginMode ? '¿No tienes acceso? ' : '¿Usuario registrado? ';
+            });
+        }
+
+        if (authForm) {
+            authForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = authEmail.value;
+                const password = authPassword.value;
+                authSubmitBtn.style.opacity = '0.7';
+
+                const authPromise = isLoginMode 
+                    ? auth.signInWithEmailAndPassword(email, password)
+                    : auth.createUserWithEmailAndPassword(email, password);
+
+                authPromise
+                    .then(() => closeAuthModal())
+                    .catch(error => alert("Error de Autenticación: " + error.message))
+                    .finally(() => authSubmitBtn.style.opacity = '1');
+            });
+        }
+
+        if (authGoogleBtn) {
+            authGoogleBtn.addEventListener('click', () => {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                auth.signInWithPopup(provider)
+                    .then(() => closeAuthModal())
+                    .catch(error => alert("Error Google Auth: " + error.message));
+            });
+        }
+        
+        function closeAllModals() {
+            const allOverlays = document.querySelectorAll('.modal-overlay');
+            allOverlays.forEach(m => m.classList.remove('active'));
+            document.body.style.overflow = '';
+        }
+
+        const profileModal = document.getElementById('profile-modal');
+        const profileLogoutBtn = document.getElementById('profile-logout-btn');
+        const profileAvatar = document.getElementById('profile-avatar');
+        const profileName = document.getElementById('profile-name');
+        const profileEmail = document.getElementById('profile-email');
+
+        if (authNavBtn) {
+            authNavBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (auth.currentUser) {
+                    if (profileModal) {
+                        profileModal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
+                } else if(authModal) {
+                    authModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        }
+
+        if (profileLogoutBtn) {
+            profileLogoutBtn.addEventListener('click', () => {
+                auth.signOut().then(() => closeAllModals());
+            });
+        }
+
+        // Estado Dinámico de Autenticación
+        auth.onAuthStateChanged(user => {
+            if (authNavBtn) {
+                if (user) {
+                    let displayName = user.displayName || "Mi Cuenta";
+                    let firstName = displayName.split(' ')[0];
+                    
+                    if (profileName) profileName.textContent = displayName;
+                    if (profileEmail) profileEmail.textContent = user.email || "";
+
+                    if (profileAvatar) {
+                        if (user.photoURL) {
+                            profileAvatar.src = user.photoURL;
+                        } else {
+                            profileAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.email || 'User')}&background=111111&color=C5A059&size=128`;
+                        }
+                    }
+
+                    authNavBtn.textContent = firstName;
+                    authNavBtn.style.color = 'var(--bg-main)'; 
+                } else {
+                    authNavBtn.textContent = 'Acceder';
+                    authNavBtn.style.color = 'var(--bg-main)';
+                }
+            }
+        });
+    }
 });
