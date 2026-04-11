@@ -265,12 +265,12 @@ document.addEventListener('DOMContentLoaded', () => {
        8. Firebase Authentication Integración
     ========================================= */
     const firebaseConfig = {
-        apiKey: "TU_API_KEY",
-        authDomain: "TU_AUTH_DOMAIN",
-        projectId: "TU_PROJECT_ID",
-        storageBucket: "TU_STORAGE_BUCKET",
-        messagingSenderId: "TU_MESSAGING_SENDER_ID",
-        appId: "TU_APP_ID"
+        apiKey: "AIzaSyBdyyUcHbzm3fkRckVf_P6d2VD1ZdptzOI",
+        authDomain: "instituto-copleston.firebaseapp.com",
+        projectId: "instituto-copleston",
+        storageBucket: "instituto-copleston.firebasestorage.app",
+        messagingSenderId: "311746651830",
+        appId: "1:311746651830:web:90327d0db03cecb55ae817"
     };
 
     if (typeof firebase !== 'undefined' && !firebase.apps.length) {
