@@ -281,50 +281,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof firebase !== 'undefined') {
         const auth = firebase.auth();
 
-        const authForm = document.getElementById('auth-form');
-        const authEmail = document.getElementById('auth-email');
-        const authPassword = document.getElementById('auth-password');
         const authGoogleBtn = document.getElementById('auth-google-btn');
-        const authToggleMode = document.getElementById('auth-toggle-mode');
-        const authSubmitBtn = document.getElementById('auth-submit-btn');
         const authNavBtn = document.getElementById('auth-btn');
         const authModal = document.getElementById('auth-modal');
-
-        let isLoginMode = true;
-
-        if (authToggleMode) {
-            authToggleMode.addEventListener('click', (e) => {
-                e.preventDefault();
-                isLoginMode = !isLoginMode;
-                authSubmitBtn.textContent = isLoginMode ? 'Iniciar Sesión' : 'Crear Acceso';
-                authToggleMode.textContent = isLoginMode ? 'Solicitar Ingreso' : 'Ya tengo acceso';
-                authToggleMode.previousSibling.textContent = isLoginMode ? '¿No tienes acceso? ' : '¿Usuario registrado? ';
-            });
-        }
-
-        if (authForm) {
-            authForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const email = authEmail.value;
-                const password = authPassword.value;
-                authSubmitBtn.style.opacity = '0.7';
-
-                const authPromise = isLoginMode 
-                    ? auth.signInWithEmailAndPassword(email, password)
-                    : auth.createUserWithEmailAndPassword(email, password);
-
-                authPromise
-                    .then(() => closeAuthModal())
-                    .catch(error => alert("Error de Autenticación: " + error.message))
-                    .finally(() => authSubmitBtn.style.opacity = '1');
-            });
-        }
 
         if (authGoogleBtn) {
             authGoogleBtn.addEventListener('click', () => {
                 const provider = new firebase.auth.GoogleAuthProvider();
                 auth.signInWithPopup(provider)
-                    .then(() => closeAuthModal())
+                    .then(() => closeAllModals())
                     .catch(error => alert("Error Google Auth: " + error.message));
             });
         }
