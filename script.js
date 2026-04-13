@@ -327,10 +327,24 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        const triggerWallBtn = document.getElementById('trigger-auth-wall');
+        if (triggerWallBtn) { 
+            triggerWallBtn.addEventListener('click', () => { 
+                if (authModal) { 
+                    authModal.classList.add('active'); 
+                    document.body.style.overflow = 'hidden'; 
+                } 
+            }); 
+        }
+
         // Estado Dinámico de Autenticación
         auth.onAuthStateChanged(user => {
-            if (authNavBtn) {
-                if (user) {
+            const premiumText = document.getElementById('premium-text');
+            const paywallBannerTrack = document.getElementById('paywall-banner-track');
+            const paywallBanner = document.getElementById('paywall-banner'); // Fallback para artículos antiguos
+
+            if (user) {
+                if (authNavBtn) {
                     let displayName = user.displayName || "Mi Cuenta";
                     let firstName = displayName.split(' ')[0];
                     
@@ -347,9 +361,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     authNavBtn.textContent = firstName;
                     authNavBtn.style.color = 'var(--bg-main)'; 
-                } else {
+                }
+
+                // Desbloqueo del Muro de Cristal
+                if (premiumText) {
+                    premiumText.style.filter = 'blur(0px)';
+                    premiumText.style.opacity = '1';
+                    setTimeout(() => {
+                        premiumText.classList.remove('content-locked');
+                        premiumText.style = ''; // Limpiar inline styles
+                    }, 800);
+                }
+                if (paywallBannerTrack) {
+                    paywallBannerTrack.style.opacity = '0';
+                    setTimeout(() => paywallBannerTrack.style.display = 'none', 800);
+                } else if (paywallBanner) {
+                    paywallBanner.style.opacity = '0';
+                    setTimeout(() => paywallBanner.style.display = 'none', 800);
+                }
+
+            } else {
+                if (authNavBtn) {
                     authNavBtn.textContent = 'Acceder';
                     authNavBtn.style.color = 'var(--bg-main)';
+                }
+
+                // Activación del Muro de Cristal
+                if (premiumText) premiumText.classList.add('content-locked');
+                if (paywallBannerTrack) {
+                    paywallBannerTrack.style.display = 'block';
+                    paywallBannerTrack.style.opacity = '1';
+                } else if (paywallBanner) {
+                    paywallBanner.style.display = 'flex';
+                    paywallBanner.style.opacity = '1';
                 }
             }
         });
