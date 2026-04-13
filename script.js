@@ -289,7 +289,9 @@ document.addEventListener('DOMContentLoaded', () => {
             authGoogleBtn.addEventListener('click', () => {
                 const provider = new firebase.auth.GoogleAuthProvider();
                 auth.signInWithPopup(provider)
-                    .then(() => closeAllModals())
+                    .then(() => {
+                        window.location.href = './perfil.html';
+                    })
                     .catch(error => alert("Error Google Auth: " + error.message));
             });
         }
@@ -310,10 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
             authNavBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 if (auth.currentUser) {
-                    if (profileModal) {
-                        profileModal.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                    }
+                    window.location.href = './perfil.html';
                 } else if(authModal) {
                     authModal.classList.add('active');
                     document.body.style.overflow = 'hidden';
