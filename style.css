@@ -144,7 +144,7 @@ button {
     align-items: center;
     background: transparent;
     z-index: 1000;
-    transition: var(--transition);
+    transition: all 0.6s ease-in-out;
 }
 
 .navbar.scrolled {
@@ -294,6 +294,26 @@ nav a:not(.btn-gold-outline):hover {
     color: var(--gold);
 }
 
+.btn-gold-white-hover {
+    border: 1px solid var(--gold);
+    padding: 0.8rem 2rem;
+    border-radius: 1px;
+    color: var(--gold);
+    background: transparent;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.btn-gold-white-hover:hover {
+    background: var(--gold);
+    color: var(--text-pure) !important;
+    border-color: var(--gold);
+}
+
 /* --- Estilos Comunes y Utilidades --- */
 .content-wrapper {
     max-width: 1200px;
@@ -414,6 +434,7 @@ nav a:not(.btn-gold-outline):hover {
     position: relative;
     z-index: 10;
     max-width: 950px;
+    margin-top: 5rem; /* Separar más del marco superior */
 }
 
 .hero-vanguardia .hero-title {
