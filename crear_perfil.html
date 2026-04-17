@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creación de Perfil | Instituto Copleston</title>
+    <link rel="stylesheet" href="./style.css?v=2.6">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="icon" href="./IMG/logo/logo.png" type="image/x-icon">
+    
+    <meta name="theme-color" content="#060913">
+    <!-- Firebase Apps Compat -->
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <!-- Preloader Institucional -->
+    <div id="copleston-preloader">
+        <img src="./IMG/logo/logo.png" alt="Copleston Shield" class="preloader-logo">
+    </div>
+
+    <header class="navbar" id="navbar">
+        <a href="./index.html#vanguardia" class="logo-link">
+            <img src="./IMG/logo/logo.png" alt="Escudo Copleston" class="logo-img">
+            <span class="logo-text">Instituto Copleston</span>
+        </a>
+    </header>
+
+    <main style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at center, var(--bg-secondary) 0%, var(--bg-main) 100%);">
+        
+        <div class="content-wrapper" style="width: 100%; max-width: 600px; padding: 2rem;">
+            <div class="dark-glass" style="padding: 4rem 3rem; border-radius: 20px; text-align: center; border: 1px solid rgba(197, 160, 89, 0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+                
+                <img src="./IMG/logo/logo.png" alt="Copleston Shield" style="height: 65px; margin-bottom: 2rem; display: inline-block;">
+                
+                <h1 style="font-family: var(--font-serif); color: var(--gold); font-size: 2rem; margin-bottom: 1rem; letter-spacing: 2px;">Cámara de Admisión</h1>
+                <p class="elegant-text" style="font-size: 1rem; margin-bottom: 3rem; color: #ccc;">Para completar su registro en el Instituto y habilitar sus credenciales de investigación, requerimos conocer su procedencia.</p>
+                
+                <form id="onboarding-form" class="minimal-form" style="margin-top: 0; max-width: 100%; text-align: left;">
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <label for="country" style="display: block; color: var(--gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem;">País de Residencia</label>
+                        <input type="text" id="country" class="luxury-input" placeholder="Ej. España, México, Argentina..." required style="width: 100%; border-bottom: 1px solid rgba(197, 160, 89, 0.4); padding-bottom: 0.5rem;">
+                    </div>
+
+                    <div style="margin-bottom: 3rem;">
+                        <label for="city" style="display: block; color: var(--gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem;">Ciudad</label>
+                        <input type="text" id="city" class="luxury-input" placeholder="¿Desde dónde investiga?" required style="width: 100%; border-bottom: 1px solid rgba(197, 160, 89, 0.4); padding-bottom: 0.5rem;">
+                    </div>
+                    
+                    <button type="submit" id="submit-onboarding" class="btn-gold-solid" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <span>Establecer Credenciales</span>
+                    </button>
+                    
+                    <div id="onboarding-error" style="color: #ff4a4a; font-size: 0.85rem; margin-top: 1rem; text-align: center; display: none;">Ocurrió un error al guardar los datos. Inténtelo de nuevo.</div>
+                </form>
+
+            </div>
+        </div>
+
+    </main>
+
+    <script src="./script.js?v=2.6"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('onboarding-form');
+            const submitBtn = document.getElementById('submit-onboarding');
+            const errorMsg = document.getElementById('onboarding-error');
+
+            setTimeout(() => {
+                if (typeof firebase !== 'undefined') {
+                    const auth = firebase.auth();
+                    const db = firebase.firestore();
+
+                    // Verificar autenticación
+                    auth.onAuthStateChanged(user => {
+                        if (!user) {
+                            // No está logueado, de vuelta a index
+                            window.location.href = './index.html';
+                        }
+                    });
+
+                    form.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        const country = document.getElementById('country').value.trim();
+                        const city = document.getElementById('city').value.trim();
+                        const user = auth.currentUser;
+
+                        if (country && city && user) {
+                            submitBtn.textContent = "Procesando...";
+                            submitBtn.classList.add('disabled-btn');
+                            
+                            // Guardar en Firestore
+                            db.collection('users').doc(user.uid).set({
+                                country: country,
+                                city: city,
+                                email: user.email,
+                                displayName: user.displayName,
+                                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                            }, { merge: true })
+                            .then(() => {
+                                // Redirigir al perfil al completar
+                                window.location.href = './perfil.html';
+                            })
+                            .catch((error) => {
+                                console.error("Error writing document: ", error);
+                                errorMsg.style.display = 'block';
+                                submitBtn.textContent = "Establecer Credenciales";
+                                submitBtn.classList.remove('disabled-btn');
+                            });
+                        }
+                    });
+                }
+            }, 100); // Darle tiempo a script.js para instanciar Firebase
+        });
+    </script>
+</body>
+</html>

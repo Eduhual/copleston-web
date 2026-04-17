@@ -289,8 +289,23 @@ document.addEventListener('DOMContentLoaded', () => {
             authGoogleBtn.addEventListener('click', () => {
                 const provider = new firebase.auth.GoogleAuthProvider();
                 auth.signInWithPopup(provider)
-                    .then(() => {
-                        window.location.href = './perfil.html';
+                    .then((result) => {
+                        if (typeof firebase.firestore !== 'undefined') {
+                            const user = result.user;
+                            const db = firebase.firestore();
+                            db.collection('users').doc(user.uid).get().then((doc) => {
+                                if (doc.exists) {
+                                    window.location.href = './perfil.html';
+                                } else {
+                                    window.location.href = './crear_perfil.html';
+                                }
+                            }).catch((error) => {
+                                console.error("Error validando perfil: ", error);
+                                window.location.href = './perfil.html';
+                            });
+                        } else {
+                            window.location.href = './perfil.html';
+                        }
                     })
                     .catch(error => alert("Error Google Auth: " + error.message));
             });
@@ -398,3 +413,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+

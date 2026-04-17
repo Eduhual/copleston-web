@@ -1487,7 +1487,10 @@ nav a:not(.btn-gold-outline):hover {
 }
 .paywall-overlay {
     position: sticky;
-    top: 35vh; /* Se queda pegado a un tercio de la pantalla mientras el usuario baja */
+    top: 35vh;
+    background: #060913 !important;
+    border: 2px solid var(--gold) !important;
+    opacity: 1 !important; /* Se queda pegado a un tercio de la pantalla mientras el usuario baja */
     width: 90%;
     max-width: 450px;
     margin: 0 auto;
@@ -1513,3 +1516,4 @@ nav a:not(.btn-gold-outline):hover {
     50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(197,160,89,0.6)); }
     100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(197,160,89,0.2)); }
 }
+

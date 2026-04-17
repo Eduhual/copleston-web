@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creación de Perfil de Prueba | Instituto Copleston</title>
+    <link rel="stylesheet" href="./style.css?v=2.6">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="icon" href="./IMG/logo/logo.png" type="image/x-icon">
+    <meta name="theme-color" content="#060913">
+</head>
+<body>
+    <!-- Preloader Institucional -->
+    <div id="copleston-preloader">
+        <img src="./IMG/logo/logo.png" alt="Copleston Shield" class="preloader-logo">
+    </div>
+
+    <header class="navbar" id="navbar">
+        <a href="./index.html#vanguardia" class="logo-link">
+            <img src="./IMG/logo/logo.png" alt="Escudo Copleston" class="logo-img">
+            <span class="logo-text">Instituto Copleston</span>
+        </a>
+    </header>
+
+    <main style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at center, var(--bg-secondary) 0%, var(--bg-main) 100%);">
+        
+        <div class="content-wrapper" style="width: 100%; max-width: 600px; padding: 2rem;">
+            <div class="dark-glass" style="padding: 4rem 3rem; border-radius: 20px; text-align: center; border: 1px solid rgba(197, 160, 89, 0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+                
+                <img src="./IMG/logo/logo.png" alt="Copleston Shield" style="height: 65px; margin-bottom: 2rem; display: inline-block;">
+                
+                <h1 style="font-family: var(--font-serif); color: var(--gold); font-size: 2rem; margin-bottom: 1rem; letter-spacing: 2px;">Cámara de Admisión (PRUEBA)</h1>
+                <p class="elegant-text" style="font-size: 1rem; margin-bottom: 3rem; color: #ccc;">Para completar su registro en el Instituto y habilitar sus credenciales de investigación, requerimos conocer su procedencia.</p>
+                
+                <form id="onboarding-form-test" class="minimal-form" style="margin-top: 0; max-width: 100%; text-align: left;" onsubmit="event.preventDefault(); alert('¡Simulación de Guardado Correcto! Redirigiendo a perfil...'); window.location.href='./perfil_prueba.html';">
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <label for="country" style="display: block; color: var(--gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem;">País de Residencia</label>
+                        <input type="text" id="country" class="luxury-input" placeholder="Ej. España, México, Argentina..." required style="width: 100%; border-bottom: 1px solid rgba(197, 160, 89, 0.4); padding-bottom: 0.5rem;">
+                    </div>
+
+                    <div style="margin-bottom: 3rem;">
+                        <label for="city" style="display: block; color: var(--gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem;">Ciudad</label>
+                        <input type="text" id="city" class="luxury-input" placeholder="¿Desde dónde investiga?" required style="width: 100%; border-bottom: 1px solid rgba(197, 160, 89, 0.4); padding-bottom: 0.5rem;">
+                    </div>
+                    
+                    <button type="submit" id="submit-onboarding" class="btn-gold-solid" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <span>Establecer Credenciales</span>
+                    </button>
+                    
+                </form>
+
+            </div>
+        </div>
+
+    </main>
+
+    <script src="./script.js?v=2.6"></script>
+</body>
+</html>
