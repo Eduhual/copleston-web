@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creación de Perfil | Instituto Copleston</title>
+    <title>Expediente Académico | Instituto Copleston</title>
     <link rel="stylesheet" href="./style.css?v=2.6">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,6 +15,38 @@
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+    <style>
+        .autocomplete-items div {
+            padding: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-pure);
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            transition: background-color 0.2s ease;
+        }
+        .autocomplete-items div:hover {
+            background-color: rgba(197, 160, 89, 0.2);
+        }
+        .autocomplete-active {
+            background-color: rgba(197, 160, 89, 0.4) !important;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Ocultar flecha de select por defecto para ponerlo elegante */
+        select.luxury-input {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23C5A059" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position-x: 100%;
+            background-position-y: center;
+        }
+    </style>
 </head>
 <body>
     <!-- Preloader Institucional -->
@@ -31,31 +63,65 @@
 
     <main style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at center, var(--bg-secondary) 0%, var(--bg-main) 100%);">
         
-        <div class="content-wrapper" style="width: 100%; max-width: 600px; padding: 2rem;">
-            <div class="dark-glass" style="padding: 4rem 3rem; border-radius: 20px; text-align: center; border: 1px solid rgba(197, 160, 89, 0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+        <div class="content-wrapper" style="width: 100%; max-width: 600px; padding: 2rem; margin-top: 5rem; margin-bottom: 3rem;">
+            <div class="dark-glass" style="padding: 4rem 3rem; border-radius: 20px; text-align: center; border: 1px solid rgba(197, 160, 89, 0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.6);">
                 
-                <img src="./IMG/logo/logo.png" alt="Copleston Shield" style="height: 65px; margin-bottom: 2rem; display: inline-block;">
+                <img src="./IMG/logo/logo.png" alt="Copleston Shield" style="height: 65px; margin-bottom: 1.5rem; display: inline-block;">
                 
-                <h1 style="font-family: var(--font-serif); color: var(--gold); font-size: 2rem; margin-bottom: 1rem; letter-spacing: 2px;">Cámara de Admisión</h1>
-                <p class="elegant-text" style="font-size: 1rem; margin-bottom: 3rem; color: #ccc;">Para completar su registro en el Instituto y habilitar sus credenciales de investigación, requerimos conocer su procedencia.</p>
+                <h1 style="font-family: var(--font-serif); color: var(--gold); font-size: 2rem; margin-bottom: 1rem; letter-spacing: 2px;">Expediente Académico</h1>
+                <p class="elegant-text" style="font-size: 0.95rem; margin-bottom: 3rem; color: #ccc;">Complete su perfil investigador ajustando el nivel de su experiencia académica. Este expediente mejora su presencia en el Instituto.</p>
                 
-                <form id="onboarding-form" class="minimal-form" style="margin-top: 0; max-width: 100%; text-align: left;">
+                <form id="academic-form" class="minimal-form" style="margin-top: 0; max-width: 100%; text-align: left;">
                     
-                    <div style="margin-bottom: 2rem;">
+                    <div style="margin-bottom: 2rem; position: relative;">
                         <label for="country" style="display: block; color: var(--gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem;">País de Residencia</label>
-                        <input type="text" id="country" class="luxury-input" placeholder="Ej. España, México, Argentina..." required style="width: 100%; border-bottom: 1px solid rgba(197, 160, 89, 0.4); padding-bottom: 0.5rem;">
+                        <input type="text" id="country" class="luxury-input" placeholder="Ej. España, México, Argentina..." autocomplete="off" required style="width: 100%; border-bottom: 1px solid rgba(197, 160, 89, 0.4); padding-bottom: 0.5rem;">
+                        <div id="country-autocomplete-list" class="autocomplete-items dark-glass" style="display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 99; max-height: 200px; overflow-y: auto; border: 1px solid rgba(197, 160, 89, 0.2); border-top: none; border-radius: 0 0 5px 5px; background: rgba(10, 14, 28, 0.95);"></div>
                     </div>
 
-                    <div style="margin-bottom: 3rem;">
-                        <label for="city" style="display: block; color: var(--gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem;">Ciudad</label>
-                        <input type="text" id="city" class="luxury-input" placeholder="¿Desde dónde investiga?" required style="width: 100%; border-bottom: 1px solid rgba(197, 160, 89, 0.4); padding-bottom: 0.5rem;">
+                    <div style="margin-bottom: 2rem;">
+                        <label for="academic-level" style="display: block; color: var(--gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem;">Grado Académico</label>
+                        <select id="academic-level" class="luxury-input" required style="width: 100%; border-bottom: 1px solid rgba(197, 160, 89, 0.4); padding-bottom: 0.5rem; cursor: pointer; color: var(--text-pure);">
+                            <option value="" disabled selected style="background-color: var(--bg-main); color: rgba(255,255,255,0.5);">Seleccione su grado mayor alcanzado</option>
+                            <option value="Primaria" style="background-color: var(--bg-main); color: var(--text-pure);">Primaria</option>
+                            <option value="Secundaria" style="background-color: var(--bg-main); color: var(--text-pure);">Secundaria</option>
+                            <option value="Técnico" style="background-color: var(--bg-main); color: var(--text-pure);">Técnico</option>
+                            <option value="Universitario" style="background-color: var(--bg-main); color: var(--text-pure);">Universitario</option>
+                            <option value="Especialización" style="background-color: var(--bg-main); color: var(--text-pure);">Especialización</option>
+                            <option value="Maestría" style="background-color: var(--bg-main); color: var(--text-pure);">Maestría</option>
+                            <option value="Doctorado" style="background-color: var(--bg-main); color: var(--text-pure);">Doctorado</option>
+                        </select>
+                    </div>
+
+                    <!-- Campos Dinámicos: Carrera -->
+                    <div id="carrera-container" style="display: none; margin-bottom: 2rem; animation: fadeIn 0.4s ease;">
+                        <label for="carrera" style="display: block; color: var(--gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem;">Carrera o Profesión</label>
+                        <input type="text" id="carrera" class="luxury-input" placeholder="Ej. Ingeniería de Software, Psicología..." style="width: 100%; border-bottom: 1px solid rgba(197, 160, 89, 0.4); padding-bottom: 0.5rem;">
+                    </div>
+
+                    <!-- Campos Dinámicos: Postgrado -->
+                    <div id="postgrado-container" style="display: none; margin-bottom: 2rem; animation: fadeIn 0.4s ease;">
+                        <div style="margin-bottom: 2rem;">
+                            <label for="profesion-base" style="display: block; color: var(--gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem;">Profesión Base</label>
+                            <input type="text" id="profesion-base" class="luxury-input" placeholder="Ej. Administración de Empresas..." style="width: 100%; border-bottom: 1px solid rgba(197, 160, 89, 0.4); padding-bottom: 0.5rem;">
+                        </div>
+                        <div>
+                            <label for="especialidad" style="display: block; color: var(--gold); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem;">Especialidad del Postgrado</label>
+                            <input type="text" id="especialidad" class="luxury-input" placeholder="Ej. Maestría en Desarrollo Organizacional..." style="width: 100%; border-bottom: 1px solid rgba(197, 160, 89, 0.4); padding-bottom: 0.5rem;">
+                        </div>
+                    </div>
+
+                    <!-- Checkbox de En Curso -->
+                    <div id="curso-container" style="display: none; margin-bottom: 3rem; animation: fadeIn 0.4s ease; align-items: center; gap: 12px;">
+                        <input type="checkbox" id="en-curso" style="accent-color: var(--gold); transform: scale(1.3); cursor: pointer; background: transparent;">
+                        <label for="en-curso" style="color: var(--text-muted); font-size: 0.95rem; cursor: pointer; user-select: none;">El grado seleccionado está actualmente en curso.</label>
                     </div>
                     
-                    <button type="submit" id="submit-onboarding" class="btn-gold-solid" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px;">
-                        <span>Establecer Credenciales</span>
+                    <button type="submit" id="submit-academic" class="btn-gold-solid" style="width: 100%; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                        <span>Actualizar Expediente</span>
                     </button>
                     
-                    <div id="onboarding-error" style="color: #ff4a4a; font-size: 0.85rem; margin-top: 1rem; text-align: center; display: none;">Ocurrió un error al guardar los datos. Inténtelo de nuevo.</div>
+                    <div id="academic-error" style="color: #ff4a4a; font-size: 0.85rem; margin-top: 1rem; text-align: center; display: none;">Debe completar los campos requeridos.</div>
                 </form>
 
             </div>
@@ -66,55 +132,199 @@
     <script src="./script.js?v=2.6"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('onboarding-form');
-            const submitBtn = document.getElementById('submit-onboarding');
-            const errorMsg = document.getElementById('onboarding-error');
+            
+            // 1. Data de Países (Latam, España y principales del mundo)
+            const countries = [
+                "Argentina", "Bolivia", "Brasil", "Chile", "Colombia", "Costa Rica", 
+                "Cuba", "Ecuador", "El Salvador", "España", "Estados Unidos", "Guatemala", 
+                "Honduras", "México", "Nicaragua", "Panamá", "Paraguay", "Perú", 
+                "Puerto Rico", "República Dominicana", "Uruguay", "Venezuela", "Alemania", 
+                "Francia", "Italia", "Reino Unido", "Canadá", "Portugal", "Suiza"
+            ];
+
+            const countryInput = document.getElementById('country');
+            const autocompleteList = document.getElementById('country-autocomplete-list');
+            let currentFocus;
+
+            countryInput.addEventListener('input', function(e) {
+                let a, b, i, val = this.value;
+                closeAllLists();
+                if (!val) { return false; }
+                currentFocus = -1;
+                
+                autocompleteList.innerHTML = '';
+                autocompleteList.style.display = 'block';
+
+                let count = 0;
+                for (i = 0; i < countries.length; i++) {
+                    if (countries[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                        b = document.createElement("DIV");
+                        b.innerHTML = "<strong>" + countries[i].substr(0, val.length) + "</strong>";
+                        b.innerHTML += countries[i].substr(val.length);
+                        b.innerHTML += "<input type='hidden' value='" + countries[i] + "'>";
+                        b.addEventListener("click", function(e) {
+                            countryInput.value = this.getElementsByTagName("input")[0].value;
+                            closeAllLists();
+                        });
+                        autocompleteList.appendChild(b);
+                        count++;
+                    }
+                }
+                if (count === 0) autocompleteList.style.display = 'none';
+            });
+
+            countryInput.addEventListener("keydown", function(e) {
+                let x = autocompleteList.getElementsByTagName("div");
+                if (e.keyCode == 40) { // Down
+                    currentFocus++;
+                    addActive(x);
+                } else if (e.keyCode == 38) { // Up
+                    currentFocus--;
+                    addActive(x);
+                } else if (e.keyCode == 13) { // Enter
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                        if (x) x[currentFocus].click();
+                    }
+                }
+            });
+
+            function addActive(x) {
+                if (!x) return false;
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                x[currentFocus].classList.add("autocomplete-active");
+            }
+
+            function removeActive(x) {
+                for (let i = 0; i < x.length; i++) {
+                    x[i].classList.remove("autocomplete-active");
+                }
+            }
+
+            function closeAllLists(elmnt) {
+                autocompleteList.style.display = 'none';
+                autocompleteList.innerHTML = '';
+            }
+
+            document.addEventListener("click", function (e) {
+                if (e.target !== countryInput) closeAllLists();
+            });
+
+            // 2. Lógica Dinámica de la Jerarquía Académica
+            const selectLevel = document.getElementById('academic-level');
+            const carreraContainer = document.getElementById('carrera-container');
+            const postgradoContainer = document.getElementById('postgrado-container');
+            const cursoContainer = document.getElementById('curso-container');
+            
+            // Inputs dinámicos
+            const inputCarrera = document.getElementById('carrera');
+            const inputProfesionBase = document.getElementById('profesion-base');
+            const inputEspecialidad = document.getElementById('especialidad');
+
+            selectLevel.addEventListener('change', function(e) {
+                const val = this.value;
+                
+                // Limpiar requerimientos temporales
+                inputCarrera.required = false;
+                inputProfesionBase.required = false;
+                inputEspecialidad.required = false;
+
+                // Ocultar todo
+                carreraContainer.style.display = 'none';
+                postgradoContainer.style.display = 'none';
+                cursoContainer.style.display = 'none';
+
+                if (!val) return;
+
+                // Mostrar botón checkbox
+                cursoContainer.style.display = 'flex';
+
+                if (val === 'Técnico' || val === 'Universitario' || val === 'Especialización') {
+                    carreraContainer.style.display = 'block';
+                    inputCarrera.required = true;
+                } else if (val === 'Maestría' || val === 'Doctorado') {
+                    postgradoContainer.style.display = 'block';
+                    inputProfesionBase.required = true;
+                    inputEspecialidad.required = true;
+                }
+            });
+
+            // 3. Conexión a Base de Datos (Firebase Firestore)
+            const form = document.getElementById('academic-form');
+            const submitBtn = document.getElementById('submit-academic');
 
             setTimeout(() => {
                 if (typeof firebase !== 'undefined') {
                     const auth = firebase.auth();
                     const db = firebase.firestore();
 
-                    // Verificar autenticación
+                    // Seguridad: Solo usuarios autenticados
                     auth.onAuthStateChanged(user => {
                         if (!user) {
-                            // No está logueado, de vuelta a index
                             window.location.href = './index.html';
                         }
                     });
 
                     form.addEventListener('submit', (e) => {
                         e.preventDefault();
-                        const country = document.getElementById('country').value.trim();
-                        const city = document.getElementById('city').value.trim();
                         const user = auth.currentUser;
 
-                        if (country && city && user) {
-                            submitBtn.textContent = "Procesando...";
-                            submitBtn.classList.add('disabled-btn');
-                            
-                            // Guardar en Firestore
-                            db.collection('users').doc(user.uid).set({
-                                country: country,
-                                city: city,
-                                email: user.email,
-                                displayName: user.displayName,
-                                createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                            }, { merge: true })
+                        if (!user) {
+                            window.location.href = './index.html';
+                            return; // Salvaguarda
+                        }
+
+                        submitBtn.textContent = "Guardando...";
+                        submitBtn.classList.add('disabled-btn');
+
+                        // Captura de datos básicos
+                        const payload = {
+                            country: document.getElementById('country').value.trim(),
+                            academicLevel: document.getElementById('academic-level').value,
+                            inProgress: document.getElementById('en-curso').checked,
+                            email: user.email,
+                            displayName: user.displayName,
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        };
+
+                        // Captura condicional
+                        if (payload.academicLevel === 'Técnico' || payload.academicLevel === 'Universitario' || payload.academicLevel === 'Especialización') {
+                            payload.career = document.getElementById('carrera').value.trim();
+                        } else if (payload.academicLevel === 'Maestría' || payload.academicLevel === 'Doctorado') {
+                            payload.baseProfession = document.getElementById('profesion-base').value.trim();
+                            payload.specialty = document.getElementById('especialidad').value.trim();
+                        }
+
+                        // Guardado en Firestore
+                        db.collection('usuarios').doc(user.uid).set(payload, { merge: true })
                             .then(() => {
-                                // Redirigir al perfil al completar
-                                window.location.href = './perfil.html';
+                                // Feedback Exitoso
+                                submitBtn.textContent = "¡Bienvenido al Instituto Copleston!";
+                                submitBtn.style.backgroundColor = "var(--gold)";
+                                submitBtn.style.color = "var(--bg-main)";
+                                
+                                // Redirección tras 2 segundos
+                                setTimeout(() => {
+                                    window.location.href = './index.html';
+                                }, 2000);
                             })
                             .catch((error) => {
-                                console.error("Error writing document: ", error);
-                                errorMsg.style.display = 'block';
-                                submitBtn.textContent = "Establecer Credenciales";
+                                console.error("Error al actualizar expediente: ", error);
+                                const errorMsg = document.getElementById('academic-error');
+                                if (errorMsg) {
+                                    errorMsg.textContent = "Hubo un error al guardar. Inténtelo de nuevo.";
+                                    errorMsg.style.display = 'block';
+                                }
+                                submitBtn.textContent = "Actualizar Expediente";
                                 submitBtn.classList.remove('disabled-btn');
                             });
-                        }
                     });
+                } else {
+                    console.error("No se detectó la inicialización de Firebase.");
                 }
-            }, 100); // Darle tiempo a script.js para instanciar Firebase
+            }, 500);
         });
     </script>
 </body>
