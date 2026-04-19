@@ -260,10 +260,43 @@
                     const auth = firebase.auth();
                     const db = firebase.firestore();
 
-                    // Seguridad: Solo usuarios autenticados
+                    // Seguridad e Hidratación de Datos
                     auth.onAuthStateChanged(user => {
                         if (!user) {
                             window.location.href = './index.html';
+                        } else {
+                            db.collection('usuarios').doc(user.uid).get().then(doc => {
+                                if (doc.exists) {
+                                    const data = doc.data();
+                                    
+                                    // Rellenar básicos
+                                    if (data.country) document.getElementById('country').value = data.country;
+                                    if (data.inProgress !== undefined) document.getElementById('en-curso').checked = data.inProgress;
+                                    
+                                    if (data.academicLevel) {
+                                        const selectLvl = document.getElementById('academic-level');
+                                        selectLvl.value = data.academicLevel;
+                                        
+                                        // Manejo DOM Dinámico (Crucial)
+                                        selectLvl.dispatchEvent(new Event('change'));
+                                        
+                                        // Rellenar dinámicos
+                                        setTimeout(() => {
+                                            if (data.career) document.getElementById('carrera').value = data.career;
+                                            if (data.baseProfession) document.getElementById('profesion-base').value = data.baseProfession;
+                                            if (data.specialty) document.getElementById('especialidad').value = data.specialty;
+                                        }, 50);
+                                    }
+                                    
+                                    const spanText = submitBtn.querySelector('span');
+                                    if(spanText) spanText.textContent = "Actualizar Expediente";
+                                    else submitBtn.textContent = "Actualizar Expediente";
+                                } else {
+                                    const spanText = submitBtn.querySelector('span');
+                                    if(spanText) spanText.textContent = "Guardar Expediente";
+                                    else submitBtn.textContent = "Guardar Expediente";
+                                }
+                            }).catch(err => console.error("Error al obtener expediente: ", err));
                         }
                     });
 

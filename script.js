@@ -290,22 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const provider = new firebase.auth.GoogleAuthProvider();
                 auth.signInWithPopup(provider)
                     .then((result) => {
-                        if (typeof firebase.firestore !== 'undefined') {
-                            const user = result.user;
-                            const db = firebase.firestore();
-                            db.collection('users').doc(user.uid).get().then((doc) => {
-                                if (doc.exists) {
-                                    window.location.href = './perfil.html';
-                                } else {
-                                    window.location.href = './crear_perfil.html';
-                                }
-                            }).catch((error) => {
-                                console.error("Error validando perfil: ", error);
-                                window.location.href = './perfil.html';
-                            });
-                        } else {
-                            window.location.href = './perfil.html';
-                        }
+                        closeAllModals();
                     })
                     .catch(error => alert("Error Google Auth: " + error.message));
             });
@@ -325,12 +310,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (authNavBtn) {
             authNavBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (auth.currentUser) {
-                    window.location.href = './perfil.html';
-                } else if(authModal) {
-                    authModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
+                if (!auth.currentUser) {
+                    e.preventDefault();
+                    if(authModal) {
+                        authModal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
                 }
             });
         }
@@ -374,6 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     authNavBtn.textContent = firstName;
+                    authNavBtn.href = './crear_perfil.html';
                     authNavBtn.style.color = 'var(--bg-main)'; 
                 }
 
@@ -397,6 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 if (authNavBtn) {
                     authNavBtn.textContent = 'Acceder';
+                    authNavBtn.href = '#';
                     authNavBtn.style.color = 'var(--bg-main)';
                 }
 
