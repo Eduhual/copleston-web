@@ -1517,3 +1517,372 @@ nav a:not(.btn-gold-outline):hover {
     100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(197,160,89,0.2)); }
 }
 
+/* --- Author Profile Card & Bibliography (Artículos) --- */
+.author-profile-card {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 3rem;
+    margin: 4rem auto;
+    max-width: 800px;
+    border-radius: 8px;
+    align-items: center;
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .author-profile-card {
+        flex-direction: row;
+        text-align: left;
+        align-items: flex-start;
+    }
+}
+
+.author-profile-card .author-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+.author-profile-card .author-info {
+    flex: 1;
+}
+
+.author-profile-card .author-name {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--text-pure);
+    margin-bottom: 0.2rem;
+}
+
+.author-profile-card .author-title {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.author-profile-card .author-bio {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.author-profile-card .author-social {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .author-profile-card .author-social {
+        justify-content: flex-start;
+    }
+}
+
+.author-profile-card .social-icon-gold {
+    color: var(--gold);
+    width: 20px;
+    height: 20px;
+    transition: var(--transition);
+    opacity: 0.8;
+}
+
+.author-profile-card .social-icon-gold:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+    filter: drop-shadow(0 0 5px rgba(197,160,89,0.5));
+}
+
+.bibliography-section {
+    max-width: 800px;
+    margin: 0 auto 6rem;
+    padding: 0 2rem;
+}
+
+.bibliography-section h3 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--text-pure);
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.bibliography-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.bibliography-list li {
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    margin-bottom: 1.2rem;
+    padding-left: 2rem; /* Hanging indent para estilo APA */
+    text-indent: -2rem; 
+}
+
+/* --- Directorio de Investigadores (autores.html) --- */
+.directorio-header {
+    padding: 8rem 0 4rem;
+    text-align: center;
+}
+
+.directorio-header .section-title {
+    margin-bottom: 1.5rem;
+}
+
+.directorio-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+}
+
+.search-bar-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+}
+
+.search-bar {
+    width: 100%;
+    background: rgba(10, 14, 28, 0.6);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    padding: 1rem 1.5rem 1rem 3rem;
+    border-radius: 30px;
+    color: var(--text-pure);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.search-bar:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 15px rgba(197, 160, 89, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+}
+
+.filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.filter-chip {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-muted);
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.filter-chip:hover, .filter-chip.active {
+    background: rgba(197, 160, 89, 0.1);
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.author-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 6rem;
+}
+
+.author-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 3rem 2rem;
+    border-radius: 8px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.author-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--gold);
+    transition: width 0.4s ease;
+}
+
+.author-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+}
+
+.author-card:hover::after {
+    width: 100%;
+}
+
+.author-card .author-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid rgba(197, 160, 89, 0.5);
+    margin-bottom: 1.5rem;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.author-card:hover .author-avatar {
+    border-color: var(--gold);
+    box-shadow: 0 0 20px rgba(197, 160, 89, 0.3);
+}
+
+.author-card .author-name {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    color: var(--text-pure);
+    margin-bottom: 0.5rem;
+}
+
+.author-card .specialty-tag {
+    font-size: 0.8rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    background: rgba(197, 160, 89, 0.1);
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+}
+
+.author-card .author-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+}
+
+.author-card .btn-gold-outline {
+    width: 100%;
+}
+
+/* --- Botón Interaction / Like --- */
+.like-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: transparent;
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.like-button:hover {
+    border-color: var(--gold);
+    color: var(--text-pure);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(197, 160, 89, 0.1);
+}
+
+.like-button .heart-icon {
+    transition: var(--transition);
+}
+
+.like-button:hover .heart-icon {
+    stroke: var(--gold);
+}
+
+.like-button.liked {
+    background: rgba(197, 160, 89, 0.1);
+    border-color: var(--gold);
+    color: var(--gold);
+    box-shadow: 0 0 20px rgba(197, 160, 89, 0.2);
+}
+
+.like-button.liked .heart-icon {
+    fill: var(--gold);
+    stroke: var(--gold);
+    animation: heartBeat 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes heartBeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+/* Elementos de la Filter Bar */
+.filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    margin-bottom: 3rem;
+    border-radius: 8px;
+    border-bottom: 2px solid rgba(197, 160, 89, 0.1);
+}
+
+.filter-bar-title {
+    font-family: var(--font-serif);
+    color: var(--gold);
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.clean-select {
+    background: transparent;
+    color: var(--text-pure);
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    cursor: pointer;
+    outline: none;
+    transition: var(--transition);
+}
+
+.clean-select:focus {
+    border-color: var(--gold);
+}
+
+.clean-select option {
+    background: var(--bg-main);
+    color: var(--text-pure);
+}
+
+
