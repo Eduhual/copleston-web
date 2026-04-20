@@ -37,6 +37,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 backToTopBtn.classList.remove('visible');
             }
         }
+        
+        // Barra de Progreso Áurea
+        const progressBar = document.getElementById('reading-progress-bar');
+        if (progressBar) {
+            const scrollTotal = document.documentElement.scrollTop || document.body.scrollTop;
+            const heightTotal = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = heightTotal ? (scrollTotal / heightTotal) * 100 : 0;
+            progressBar.style.width = scrollPercent + '%';
+        }
     });
 
     // Acción de Clic para Volver Arriba
@@ -399,5 +408,288 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    /* =========================================
+       9. Diccionario y Motores de Interacción Social
+    ========================================= */
+
+    // Registro de Artículos del Ecosistema
+    const ARTICLES_DICTIONARY = {
+        "art_filosofia_1": {
+            title: "El determinismo radical de Baruch Spinoza",
+            date: "23 de Marzo de 2026",
+            url: "./art_filosofia_1.html",
+            category: "Filosofía"
+        },
+        "art_psicologia_1": {
+            title: "Terapia Racional Emotiva Conductual (TREC)",
+            date: "06 de Abril de 2026",
+            url: "./art_psicologia_1.html",
+            category: "Psicología"
+        },
+        "filosofia": {
+            title: "Cámara de Filosofía",
+            date: "Continuo",
+            url: "./filosofia.html",
+            category: "Investigación"
+        },
+        "psicologia": {
+            title: "Cámara de Psicología",
+            date: "Continuo",
+            url: "./psicologia.html",
+            category: "Investigación"
+        },
+        "academia": {
+            title: "Programas de Especialización Académica",
+            date: "Inscripciones Abiertas",
+            url: "./academia.html",
+            category: "Academia"
+        },
+        "revista": {
+            title: "Revista Copleston - Edición Alpha",
+            date: "Abril 2026",
+            url: "./revista.html",
+            category: "Publicación"
+        }
+    };
+
+    if (typeof firebase !== 'undefined' && typeof firebase.firestore !== 'undefined') {
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        // 1. Lógica del Botón Like en el Artículo Abierto
+        const likeBtn = document.getElementById('like-btn');
+        const bookmarkBtn = document.getElementById('bookmark-btn');
+        const notesArea = document.getElementById('research-notes-area');
+        
+        // Función para sincronizar estado visual (Likes/Marcadores) al cargar
+        function syncInteractionState(user, articleId) {
+            if (!user || !articleId) return;
+
+            // Sincronizar Like
+            if (likeBtn) {
+                db.collection('interacciones').doc(`${user.uid}_${articleId}`).get().then(doc => {
+                    if (doc.exists) {
+                        likeBtn.classList.add('liked');
+                    } else {
+                        likeBtn.classList.remove('liked');
+                    }
+                });
+            }
+
+            // Sincronizar Marcador
+            if (bookmarkBtn) {
+                db.collection('marcadores').doc(`${user.uid}_${articleId}`).get().then(doc => {
+                    if (doc.exists) {
+                        bookmarkBtn.classList.add('bookmarked');
+                    } else {
+                        bookmarkBtn.classList.remove('bookmarked');
+                    }
+                });
+            }
+
+            // Sincronizar Notas Privadas
+            if (notesArea) {
+                db.collection('notas').doc(`${user.uid}_${articleId}`).get().then(doc => {
+                    if (doc.exists) {
+                        notesArea.value = doc.data().text || "";
+                    }
+                });
+            }
+        }
+
+        if (likeBtn || bookmarkBtn || notesArea) {
+            const articleId = (likeBtn || bookmarkBtn || notesArea).getAttribute('data-article-id');
+            
+            // Escuchar cambios de autenticación para sincronizar
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    syncInteractionState(user, articleId);
+                } else {
+                    if(likeBtn) likeBtn.classList.remove('liked');
+                    if(bookmarkBtn) bookmarkBtn.classList.remove('bookmarked');
+                    if(notesArea) notesArea.value = "";
+                }
+            });
+
+            // Acción de Like
+            if (likeBtn) {
+                const likeCountSpan = likeBtn.querySelector('.like-count');
+                db.collection('interacciones').where('articleId', '==', articleId).onSnapshot((snapshot) => {
+                    if(likeCountSpan) likeCountSpan.textContent = snapshot.size;
+                });
+
+                likeBtn.addEventListener('click', () => {
+                    const user = auth.currentUser;
+                    if (!user) {
+                        const modal = document.getElementById('auth-modal');
+                        if (modal) modal.classList.add('active');
+                        return;
+                    }
+
+                    const interactionRef = db.collection('interacciones').doc(`${user.uid}_${articleId}`);
+                    interactionRef.get().then(doc => {
+                        if (doc.exists) {
+                            interactionRef.delete().then(() => likeBtn.classList.remove('liked'));
+                        } else {
+                            interactionRef.set({ 
+                                uid: user.uid, 
+                                articleId: articleId, 
+                                timestamp: firebase.firestore.FieldValue.serverTimestamp() 
+                            }).then(() => likeBtn.classList.add('liked'));
+                        }
+                    });
+                });
+            }
+
+            // Acción de Bookmark
+            if (bookmarkBtn) {
+                bookmarkBtn.addEventListener('click', () => {
+                    const user = auth.currentUser;
+                    if (!user) {
+                        const modal = document.getElementById('auth-modal');
+                        if (modal) modal.classList.add('active');
+                        return;
+                    }
+
+                    const bookmarkRef = db.collection('marcadores').doc(`${user.uid}_${articleId}`);
+                    bookmarkRef.get().then(doc => {
+                        if (doc.exists) {
+                            bookmarkRef.delete().then(() => bookmarkBtn.classList.remove('bookmarked'));
+                        } else {
+                            bookmarkRef.set({ 
+                                uid: user.uid, 
+                                articleId: articleId, 
+                                timestamp: firebase.firestore.FieldValue.serverTimestamp() 
+                            }).then(() => bookmarkBtn.classList.add('bookmarked'));
+                        }
+                    });
+                });
+            }
+
+            // Acción de Notas Privadas (Autosave)
+            if (notesArea) {
+                let timeout = null;
+                const statusIndicator = document.getElementById('notes-status');
+
+                notesArea.addEventListener('input', () => {
+                    const user = auth.currentUser;
+                    if (!user) return;
+
+                    if (statusIndicator) statusIndicator.textContent = 'Escribiendo...';
+                    
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => {
+                        const text = notesArea.value;
+                        db.collection('notas').doc(`${user.uid}_${articleId}`).set({
+                            uid: user.uid,
+                            articleId: articleId,
+                            text: text,
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        }, { merge: true }).then(() => {
+                            if (statusIndicator) statusIndicator.textContent = 'Guardado';
+                        }).catch(() => {
+                            if (statusIndicator) statusIndicator.textContent = 'Error al guardar';
+                        });
+                    }, 1000); // Debounce de 1 segundo
+                });
+            }
+
+            // Contador de Visualizaciones
+            if (articleId) {
+                const articleRef = db.collection('articulos').doc(articleId);
+                articleRef.set({ visitas: firebase.firestore.FieldValue.increment(1) }, { merge: true });
+            }
+        }
+
+        // 3. Renderizar Dashboard (perfil.html)
+        const favoritesGrid = document.getElementById('favorites-grid');
+        const bookmarksGrid = document.getElementById('bookmarks-grid');
+        const notesGrid = document.getElementById('notes-grid');
+
+        if (favoritesGrid || bookmarksGrid || notesGrid) {
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    // Cargar Favoritos (Likes)
+                    if (favoritesGrid) {
+                        db.collection('interacciones').where('uid', '==', user.uid).get().then(snapshot => {
+                            const emptyMsg = document.getElementById('favorites-empty-msg');
+                            if (snapshot.empty) {
+                                if(emptyMsg) emptyMsg.style.display = 'block';
+                                return;
+                            }
+                            if(emptyMsg) emptyMsg.style.display = 'none';
+                            
+                            favoritesGrid.innerHTML = '';
+                            snapshot.forEach(doc => {
+                                const data = doc.data();
+                                const meta = ARTICLES_DICTIONARY[data.articleId] || { title: data.articleId, url: "#", category: "Archivo" };
+                                favoritesGrid.innerHTML += `
+                                    <article class="articulo-card dark-glass" style="opacity:1; transform:none;">
+                                        <span class="articulo-date">${meta.category}</span>
+                                        <h4 class="articulo-title">${meta.title}</h4>
+                                        <a href="${meta.url}" class="btn-link-gold">Revisar <span>&#8594;</span></a>
+                                    </article>
+                                `;
+                            });
+                        });
+                    }
+
+                    // Cargar Marcadores (Biblioteca)
+                    if (bookmarksGrid) {
+                        db.collection('marcadores').where('uid', '==', user.uid).get().then(snapshot => {
+                            const emptyMsg = document.getElementById('bookmarks-empty-msg');
+                            if (snapshot.empty) {
+                                if(emptyMsg) emptyMsg.style.display = 'block';
+                                return;
+                            }
+                            if(emptyMsg) emptyMsg.style.display = 'none';
+
+                            bookmarksGrid.innerHTML = '';
+                            snapshot.forEach(doc => {
+                                const data = doc.data();
+                                const meta = ARTICLES_DICTIONARY[data.articleId] || { title: data.articleId, url: "#", category: "Archivo" };
+                                bookmarksGrid.innerHTML += `
+                                    <div class="bookmark-item dark-glass" style="padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(197, 160, 89, 0.1);">
+                                        <span style="font-size: 0.7rem; color: var(--gold); text-transform: uppercase;">${meta.category}</span>
+                                        <h4 style="font-family: var(--font-serif); margin: 0.5rem 0; color: #fff;">${meta.title}</h4>
+                                        <a href="${meta.url}" class="btn-link-gold" style="font-size: 0.8rem;">Continuar lectura <span>&#8594;</span></a>
+                                    </div>
+                                `;
+                            });
+                        });
+                    }
+
+                    // Cargar Cuaderno de Notas
+                    if (notesGrid) {
+                        db.collection('notas').where('uid', '==', user.uid).get().then(snapshot => {
+                            const emptyMsg = document.getElementById('notes-empty-msg');
+                            if (snapshot.empty) {
+                                if(emptyMsg) emptyMsg.style.display = 'block';
+                                return;
+                            }
+                            if(emptyMsg) emptyMsg.style.display = 'none';
+
+                            notesGrid.innerHTML = '';
+                            snapshot.forEach(doc => {
+                                const data = doc.data();
+                                const meta = ARTICLES_DICTIONARY[data.articleId] || { title: data.articleId, url: "#" };
+                                notesGrid.innerHTML += `
+                                    <div class="note-card dark-glass" style="padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--gold);">
+                                        <h4 style="font-family: var(--font-serif); color: var(--gold); margin-bottom: 0.8rem;">Investigación: ${meta.title}</h4>
+                                        <p style="font-size: 0.9rem; color: #ccc; line-height: 1.6; white-space: pre-wrap; font-family: 'Inter', sans-serif;">${data.text}</p>
+                                        <div style="margin-top: 1rem; text-align: right;">
+                                            <a href="${meta.url}" class="btn-link-gold" style="font-size: 0.75rem;">Ir a la fuente <span>&#8594;</span></a>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+                        });
+                    }
+                }
+            });
+        }
+    }
 });
+
 

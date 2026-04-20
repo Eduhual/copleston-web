@@ -1,10 +1,10 @@
-﻿ï»¿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C?mara de Filosof?a | Instituto Copleston</title>
-    <link rel="stylesheet" href="./style.css?v=2.2">
+    <link rel="stylesheet" href="./style.css?v=3.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -67,9 +67,19 @@
 
         <section class="articulos-semanales" style="padding-top: 4rem;">
             <div class="content-wrapper">
-                <div class="articulos-grid">
+                <!-- Filtros Avanzados -->
+                <div class="filter-bar dark-glass">
+                    <h3 class="filter-bar-title">Directorio de Artículos</h3>
+                    <select class="clean-select" id="sort-select">
+                        <option value="recent">Más Recientes</option>
+                        <option value="popular">Más Populares (Likes)</option>
+                        <option value="reads">Más Leídos (Vistas)</option>
+                    </select>
+                </div>
+
+                <div class="articulos-grid" id="articles-container">
                     <!-- Articulo Filosof?a 1 (El ?ltimo) -->
-                    <article class="articulo-card">
+                    <article class="articulo-card" data-id="art_filosofia_1" data-date="2026-03-23" data-likes="0" data-reads="0">
                         <span class="articulo-date">23 de Marzo de 2026</span>
                         <h4 class="articulo-title">El determinismo radical de Baruch Spinoza</h4>
                         <p class="articulo-excerpt">La conquista de la verdadera libertad y la demolici?n de la voluntad cartesiana.</p>
@@ -230,7 +240,7 @@
             <span>Confidencialidad bajo estatuto.</span>
         </div>
     </footer>
-    <script src="./script.js?v=2.2"></script>
+    <script src="./script.js?v=3.0"></script>
     <!-- Back to Top Button -->
     <button id="back-to-top" aria-label="Volver arriba">&#8593;</button>
 </body>

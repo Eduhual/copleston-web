@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expediente Académico | Instituto Copleston</title>
-    <link rel="stylesheet" href="./style.css?v=2.6">
+    <link rel="stylesheet" href="./style.css?v=3.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -127,9 +127,19 @@
             </div>
         </div>
 
+        <section id="mis-favoritos" class="premium-card profile-favorites" style="margin-top: 3rem;">
+            <h2 class="section-title-small" style="color: var(--gold);">Mis Lecturas Favoritas</h2>
+            <div class="gold-divider" style="margin-bottom: 2rem;"></div>
+            
+            <div id="favorites-grid" class="articulos-grid">
+                <!-- Renderizado vía JS -->
+                <p class="text-muted">Aún no has guardado ninguna lectura en tu archivo personal.</p>
+            </div>
+        </section>
+
     </main>
 
-    <script src="./script.js?v=2.6"></script>
+    <script src="./script.js?v=3.0"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
